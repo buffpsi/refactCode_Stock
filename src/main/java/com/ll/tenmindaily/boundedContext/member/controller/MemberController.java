@@ -63,4 +63,3 @@ public class MemberController {
         return "redirect:/usr/member/login";
     }
 }
-
