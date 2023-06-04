@@ -65,7 +65,9 @@
                         </a>
                     </li>
                     <li><a>설정</a></li>
-                    <li><a>로그인</a></li>
+                    <li th:if="${@rq.isLogout()}"><a href="/usr/member/login">로그인</a></li>
+                    <li th:if="${@rq.isLogin()}"><a href="javascript:" onclick="$(this).next().submit();">로그아웃</a>
+                        <form class="!hidden" hidden th:action="|/usr/member/logout|" method="POST"></form></li>
                 </ul>
             </div>
         </div>

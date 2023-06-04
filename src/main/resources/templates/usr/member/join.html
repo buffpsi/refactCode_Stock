@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/layout.html}">
+<head>
+    <meta charset="UTF-8" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+<main layout:fragment="content" class="flex-col flex items-center justify-center">
+    <script>
+        function JoinForm__submit(form) {
+            form.username.value = form.username.value.trim();
+
+            if (form.username.value.length === 0) {
+                alert('이름을 입력해주세요.');
+                form.username.focus();
+                return;
+            }
+
+            form.id.value = form.id.value.trim();
+
+            if (form.id.value.length === 0) {
+                alert('아이디를 입력해주세요.');
+                form.id.focus();
+                return;
+            }
+
+            if (form.id.value.length < 4) {
+                alert('아이디를 4자 이상 입력해주세요.');
+                form.id.focus();
+                return;
+            }
+
+            form.password.value = form.password.value.trim();
+
+            if (form.password.value.length === 0) {
+                alert('비밀번호를 입력해주세요.');
+                form.password.focus();
+                return;
+            }
+
+            if (form.password.value.length < 4) {
+                alert('비밀번호를 4자 이상 입력해주세요.');
+                form.password.focus();
+                return;
+            }
+
+            if (form.password_check.value !== form.password.value) {
+                alert('비밀번호를 확인해주세요.');
+                form.password_check.value = '';
+                form.password_check.focus();
+                return;
+            }
+
+            form.nickname.value = form.nickname.value.trim();
+
+            if (form.nickname.value.length === 0) {
+                alert('닉네임을 입력해주세요.');
+                form.nickname.focus();
+                return;
+            }
+
+            form.email.value = form.email.value.trim();
+
+            if (form.email.value.length === 0) {
+                alert('이메일을 입력해주세요.');
+                form.email.focus();
+                return;
+            } else if (!validateEmail(form.email.value)) {
+                alert('올바른 형식의 이메일 주소를 입력해주세요.');
+                form.email.focus();
+                return;
+            }
+
+            if (form.interest1.value === '') {
+                alert('관심사를 선택해주세요.');
+                form.interest1.focus();
+                return;
+            } else if (form.interest2.value === '') {
+                alert('관심사를 선택해주세요.');
+                form.interest2.focus();
+                return;
+            }
+
+            if (!form.personalInfoAgreement.checked) {
+                alert('개인정보 수집 및 활용 약관에 동의해주세요.')
+                form.personalInfoAgreement.focus();
+                return;
+            }
+
+            function validateEmail(email) {
+                var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+                return emailPattern.test(email);
+            }
+
+            form.submit();
+        }
+    </script>
+
+    <h1>회원가입</h1>
+    <hr>
+    <form th:action="@{/usr/member/join}" method="POST" class="flex flex-col justify-center" onsubmit="JoinForm__submit(this); return false;">
+        <table class="">
+            <tr class="gap-5">
+                <td class="text-right pr-4">
+                    <label for="username">이름</label>
+                </td>
+                <td>
+                    <input id="username" name="username" type="text" class="border-2 rounded-md px-2">
+                </td>
+            </tr>
+            <tr class="gap-5">
+                <td class="text-right pr-4">
+                    <label for="id">아이디</label>
+                </td>
+                <td>
+                    <input id="id" name="id" type="text" class="border-2 rounded-md px-2">
+                </td>
+            </tr>
+            <tr class="gap-5">
+                <td class="text-right pr-4">
+                    <label for="password">비밀번호</label>
+                </td>
+                <td>
+                    <input id="password" name="password" type="password" class="border-2 rounded-md px-2">
+                </td>
+            </tr>
+            <tr class="gap-5">
+                <td class="text-right pr-4">
+                    <label for="password_check">비밀번호 확인</label>
+                </td>
+                <td>
+                    <input id="password_check" name="password_check" type="password" class="border-2 rounded-md px-2">
+                </td>
+            </tr>
+            <tr class="gap-5">
+                <td class="text-right pr-4">
+                    <label for="nickname">닉네임</label>
+                </td>
+                <td>
+                    <input id="nickname" name="nickname" type="text" class="border-2 rounded-md px-2">
+                </td>
+            </tr>
+            <tr class="gap-5">
+                <td class="text-right pr-4">
+                    <label for="email">이메일</label>
+                </td>
+                <td>
+                    <input id="email" name="email" type="text" class="border-2 rounded-md px-2">
+                </td>
+            </tr>
+            <tr class="gap-5">
+                <td class="text-right pr-4">
+                    <label for="interest1">관심사1</label>
+                </td>
+                <td>
+                    <select id="interest1" name="interest1" class="border-2 rounded-md px-2">
+                        <option value="">-관심사를 선택해주세요-</option>
+                        <option value="stocks">주식</option>
+                        <option value="cryptocurrency">코인</option>
+                        <option value="realEstate">부동산</option>
+                        <option value="musicInvestment">뮤직테크</option>
+                        <option value="artInvestment">아트테크</option>
+                        <option value="resellInvestment">리셀테크</option>
+                        <option value="hobbyInvestment">취미테크</option>
+                        <option value="appInvestment">앱테크</option>
+                        <option value="snsInvestment">SNS테크</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="gap-5">
+                <td class="text-right pr-4">
+                    <label for="interest2">관심사2</label>
+                </td>
+                <td>
+                    <select id="interest2" name="interest2" class="border-2 rounded-md px-2">
+                        <option value="">-관심사를 선택해주세요-</option>
+                        <option value="stocks">주식</option>
+                        <option value="cryptocurrency">코인</option>
+                        <option value="realEstate">부동산</option>
+                        <option value="musicInvestment">뮤직테크</option>
+                        <option value="artInvestment">아트테크</option>
+                        <option value="resellInvestment">리셀테크</option>
+                        <option value="hobbyInvestment">취미테크</option>
+                        <option value="appInvestment">앱테크</option>
+                        <option value="snsInvestment">SNS테크</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <input type="checkbox" id="personalInfoAgreement" name="personalInfoAgreement">
+            <label for="personalInfoAgreement">개인정보 수집 및 활용 동의</label>
+        </div>
+        <button type="submit" class="btn">회원가입</button>
+    </form>
+</main>
+</body>
+</html>
