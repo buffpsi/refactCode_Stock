@@ -21,3 +21,8 @@ body {
     margin-left: 200px;
     margin-right: 200px;
 }
+
+.comment {
+    border-top:dotted 1px #ddd;
+    font-size:1em;
+}

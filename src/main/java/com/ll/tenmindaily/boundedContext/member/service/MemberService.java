@@ -1,5 +1,6 @@
 package com.ll.tenmindaily.boundedContext.member.service;
 
+import com.ll.tenmindaily.base.exception.DataNotFoundException;
 import com.ll.tenmindaily.base.rsData.RsData;
 import com.ll.tenmindaily.boundedContext.member.controller.MemberController;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
@@ -52,7 +53,16 @@ public class MemberService {
         return RsData.of("S-1", "회원가입이 완료되었습니다.", memberRepository.save(member));
     }
 
-    private Optional<Member> findByUsername(String username) {
+    public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
+    }
+
+    public Member getUser(String username){
+        Optional<Member> member = this.memberRepository.findByUserId(username);
+        if(member.isPresent()){
+            return member.get();
+        }else {
+            throw new DataNotFoundException("siteuser not found");
+        }
     }
 }
