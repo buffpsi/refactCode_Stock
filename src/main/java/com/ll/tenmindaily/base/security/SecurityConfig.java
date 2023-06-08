@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -15,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
+    private final CustomOAuth2AccessTokenResponseClient oAuth2AccessTokenResponseClient;
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -23,6 +25,13 @@ public class SecurityConfig {
                         formLogin -> formLogin
                                 .loginPage("/usr/member/login")
 
+                )
+                .oauth2Login(
+                        oauth2Login -> oauth2Login
+                                .loginPage("/usr/member/login")
+                                .tokenEndpoint(t -> t
+                                        .accessTokenResponseClient(oAuth2AccessTokenResponseClient)
+                                )
                 )
 
                 .logout(
