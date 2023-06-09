@@ -72,13 +72,7 @@ public class MemberController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/myPage")
     public String showMyPage(Model model) {
-        Optional<Member> member = memberService.findByUserId(rq.getMember().getUserId());
-
-        if (member.isEmpty()) {
-            return "redirect:/usr/member/login";
-        }
-
-        Member actor = member.get();
+        Member actor = memberService.getUser(rq.getMember().getUserId());
 
         model.addAttribute("username", actor.getUsername());
         model.addAttribute("nickname", actor.getNickname().isEmpty() ? "닉네임을 생성해주세요." : actor.getNickname());
