@@ -41,14 +41,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         Member member = memberService.whenSocialLogin(oAuth2User, userId, providerTypeCode).getData();
 
-        return new CustomOAuth2User(member.getUsername(), member.getPassword(), member.getGrantedAuthorities());
+        return new CustomOAuth2User(member.getUserId(), member.getPassword(), member.getGrantedAuthorities());
     }
 }
 
 class CustomOAuth2User extends User implements OAuth2User {
 
-    public CustomOAuth2User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
+    public CustomOAuth2User(String userId, String password, Collection<? extends GrantedAuthority> authorities) {
+        super(userId, password, authorities);
     }
 
     @Override
