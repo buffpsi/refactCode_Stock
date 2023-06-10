@@ -2,7 +2,6 @@ package com.ll.tenmindaily.base.rq;
 
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import com.ll.tenmindaily.boundedContext.member.service.MemberService;
-import jakarta.servlet.http.HttpServlet;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
