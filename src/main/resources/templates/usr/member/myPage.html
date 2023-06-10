@@ -8,7 +8,7 @@
 <body layout:fragment="content" class="flex-col flex items-center justify-center">
 <main class="pt-2">
   <div class="flex justify-end">
-    <button class="btn btn-sm">수정하기</button>
+    <a href="/usr/member/editMyPage" class="btn btn-sm">수정하기</a>
   </div>
   <table class="table" style="width: 500px">
     <tr>
@@ -24,12 +24,8 @@
       <td th:text="${email}" colspan="2"></td>
     </tr>
     <tr>
-      <th>관심사1</th>
-      <td th:text="${interest1}" colspan="2"></td>
-    </tr>
-    <tr>
-      <th>관심사2</th>
-      <td th:text="${interest2}" colspan="2"></td>
+      <th>가입일</th>
+      <td th:text="${createdAt}" colspan="2"></td>
     </tr>
     <tr>
       <th>이메일 인증 여부</th>

@@ -109,4 +109,13 @@ public class MemberService {
         return join(joinForm);
     }
 
+    @Transactional
+    public RsData<Member> modify(Member actor, MemberController.JoinForm joinForm) {
+        actor.setUsername(joinForm.getUsername());
+        actor.setNickname(joinForm.getNickname());
+        actor.setEmail(joinForm.getEmail());
+
+        return RsData.of("S-1","성공적으로 수정되었습니다.", memberRepository.save(actor));
+    }
+
 }

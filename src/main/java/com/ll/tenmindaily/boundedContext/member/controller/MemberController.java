@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/usr/member")
 @RequiredArgsConstructor
@@ -72,15 +70,40 @@ public class MemberController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/myPage")
     public String showMyPage(Model model) {
-        Member actor = memberService.getUser(rq.getMember().getUserId());
+        Member actor = rq.getMember();
 
         model.addAttribute("username", actor.getUsername());
         model.addAttribute("nickname", actor.getNickname().isEmpty() ? "닉네임을 생성해주세요." : actor.getNickname());
         model.addAttribute("email", actor.getEmail());
-        model.addAttribute("interest1", actor.getInterest1().isEmpty() ? "관심사를 지정해주세요." : actor.getInterest1());
-        model.addAttribute("interest2", actor.getInterest2().isEmpty() ? "관심사를 지정해주세요." : actor.getInterest2());
+        model.addAttribute("createdAt", actor.getCreatedAt());
         model.addAttribute("emailVerified", actor.getEmailVerified());
 
         return "/usr/member/myPage";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/editMyPage")
+    public String showEditMyPage(Model model) {
+        Member actor = memberService.getUser(rq.getMember().getUserId());
+
+        model.addAttribute("username", actor.getUsername());
+        model.addAttribute("nickname", actor.getNickname());
+        model.addAttribute("email", actor.getEmail());
+        model.addAttribute("interest1", actor.getInterest1());
+        model.addAttribute("interest2", actor.getInterest2());
+        model.addAttribute("emailVerified", actor.getEmailVerified());
+
+        return "/usr/member/editMyPage";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/editMyPage")
+    public String editMyPage(JoinForm joinForm) {
+        Member actor = rq.getMember();
+
+        RsData<Member> modifyRsData = memberService.modify(actor, joinForm);
+
+        return "redirect:/usr/member/myPage";
+    }
+
 }
