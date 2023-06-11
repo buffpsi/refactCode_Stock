@@ -2,6 +2,7 @@ package com.ll.tenmindaily.boundedContext.member.service;
 
 import com.ll.tenmindaily.base.exception.DataNotFoundException;
 import com.ll.tenmindaily.base.rsData.RsData;
+import com.ll.tenmindaily.boundedContext.emailVerification.service.EmailVerificationService;
 import com.ll.tenmindaily.boundedContext.member.controller.MemberController;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import com.ll.tenmindaily.boundedContext.member.repository.MemberRepository;
@@ -19,10 +20,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberService {
-
     private final MemberRepository memberRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final EmailVerificationService emailVerificationService;
 
     @Transactional
     public RsData<Member> join(MemberController.JoinForm joinForm) {
@@ -53,7 +55,9 @@ public class MemberService {
                 .providerType(null)
                 .build();
 
-        return RsData.of("S-1", "회원가입이 완료되었습니다.", memberRepository.save(member));
+        emailVerificationService.send(memberRepository.save(member));
+
+        return RsData.of("S-1", "회원가입이 완료되었습니다.");
     }
 
     public Optional<Member> findByUsername(String username) {
