@@ -30,7 +30,7 @@ public class MemberController {
     @ToString
     public static class JoinForm {
         @NotBlank
-        private final String id;
+        private final String userId;
         @NotBlank
         private final String username;
         @NotBlank
