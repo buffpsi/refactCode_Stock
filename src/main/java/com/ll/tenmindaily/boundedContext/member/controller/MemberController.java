@@ -39,10 +39,6 @@ public class MemberController {
         private final String email;
         @NotBlank
         private final String nickname;
-        @NotBlank
-        private final String interest1;
-        @NotBlank
-        private final String interest2;
         private final String profileImage;
     }
 
@@ -89,8 +85,6 @@ public class MemberController {
         model.addAttribute("username", actor.getUsername());
         model.addAttribute("nickname", actor.getNickname());
         model.addAttribute("email", actor.getEmail());
-        model.addAttribute("interest1", actor.getInterest1());
-        model.addAttribute("interest2", actor.getInterest2());
         model.addAttribute("emailVerified", actor.getEmailVerified());
 
         return "/usr/member/editMyPage";

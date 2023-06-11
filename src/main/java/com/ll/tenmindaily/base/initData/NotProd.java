@@ -10,23 +10,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 @Configuration
 @Profile({"dev", "test"})
 public class NotProd {
     @Bean
     CommandLineRunner initData(
-            MemberService memberService,
-            MemberRepository memberRepository
+            MemberService memberService
     ) {
         return new CommandLineRunner() {
             @Override
             @Transactional
             public void run(String... args) throws Exception {
                 Member member = memberService.join(new MemberController.JoinForm(
-                        "user1", "user1", "1234", "user1@email.com", "user1", "stocks",
-                        "cryptoCurrency", null
+                        "user1", "user1", "1234", "user1@email.com", "user1", null
                 )).getData();
             }
         };
