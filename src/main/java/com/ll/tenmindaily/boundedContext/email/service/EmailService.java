@@ -37,6 +37,11 @@ public class EmailService {
     }
 
     private RsData trySend(String email, String title, String body) {
+        // 쓸 데 없는 메일 발송을 막기 위해 테스트용 이메일 주소를 삽입해놨습니다.
+        // 실제 발송 테스트를 원하시면 아래 if 문을 삭제하거나 주석 처리하여 테스트를 진행해주세요.
+        if (!email.equals("test@test.com")) {
+            return RsData.of("S-0", "메일이 발송되었습니다.");
+        }
         try {
             emailSenderService.send(email, "no-reply@no-reply.com", title, body);
 

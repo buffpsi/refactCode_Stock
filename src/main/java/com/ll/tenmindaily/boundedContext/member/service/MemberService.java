@@ -29,12 +29,10 @@ public class MemberService {
     @Transactional
     public RsData<Member> join(MemberController.JoinForm joinForm) {
         String username = joinForm.getUsername();
-        String id = joinForm.getId();
+        String id = joinForm.getUserId();
         String password = joinForm.getPassword();
         String email = joinForm.getEmail();
         String nickname = joinForm.getNickname();
-        String interest1 = joinForm.getInterest1();
-        String interest2 = joinForm.getInterest2();
 
         if (findByUserId(username).isPresent()) {
             return RsData.of("F-1", "해당 아이디(%s)는 이미 사용중입니다.".formatted(username));
@@ -50,8 +48,6 @@ public class MemberService {
                 .email(email)
                 .emailVerified(false)
                 .nickname(nickname)
-                .interest1(interest1)
-                .interest2(interest2)
                 .providerType(null)
                 .build();
 
@@ -108,7 +104,7 @@ public class MemberService {
             }
         }
 
-        MemberController.JoinForm joinForm = new MemberController.JoinForm(userId, username, "", email, "", "", "", profileImage);
+        MemberController.JoinForm joinForm = new MemberController.JoinForm(userId, username, "", email, "", profileImage);
 
         return join(joinForm);
     }
@@ -122,4 +118,17 @@ public class MemberService {
         return RsData.of("S-1","성공적으로 수정되었습니다.", memberRepository.save(actor));
     }
 
+    @Transactional
+    public RsData verifyEmail(long id, String verificationCode) {
+        RsData verifyVerificationCodeRs = emailVerificationService.verifyVerificationCode(id, verificationCode);
+
+        if (!verifyVerificationCodeRs.isSuccess()) {
+            return verifyVerificationCodeRs;
+        }
+
+        Member member = memberRepository.findById(id).get();
+        member.setEmailVerified(true);
+
+        return RsData.of("S-1", "이메일인증이 완료되었습니다.");
+    }
 }
