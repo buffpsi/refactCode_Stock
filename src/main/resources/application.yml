@@ -3,6 +3,7 @@ server:
 spring:
   profiles:
     active: dev
+    include: secret
   thymeleaf:
     cache: false
     prefix: file:src/main/resources/templates/
