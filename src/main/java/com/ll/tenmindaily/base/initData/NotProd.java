@@ -2,7 +2,6 @@ package com.ll.tenmindaily.base.initData;
 
 import com.ll.tenmindaily.boundedContext.member.controller.MemberController;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
-import com.ll.tenmindaily.boundedContext.member.repository.MemberRepository;
 import com.ll.tenmindaily.boundedContext.member.service.MemberService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +21,7 @@ public class NotProd {
             @Transactional
             public void run(String... args) throws Exception {
                 Member member = memberService.join(new MemberController.JoinForm(
-                        "user1", "user1", "1234", "user1@email.com", "user1", null
+                        "user1", "user1", "1234", "user1@email.com", "user1"
                 )).getData();
             }
         };

@@ -39,7 +39,6 @@ public class MemberController {
         private final String email;
         @NotBlank
         private final String nickname;
-        private final String profileImage;
     }
 
     @PreAuthorize("isAnonymous()")

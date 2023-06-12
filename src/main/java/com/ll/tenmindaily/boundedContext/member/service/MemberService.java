@@ -81,30 +81,26 @@ public class MemberService {
 
         String username = null;
         String email = null;
-        String profileImage = null;
 
         switch (providerTypeCode) {
             case "NAVER" -> {
                 username = ((Map<String, String>) oAuth2User.getAttribute("response")).get("name");
                 email = ((Map<String, String>) oAuth2User.getAttribute("response")).get("email");
-                profileImage = ((Map<String, String>) oAuth2User.getAttribute("response")).get("profile_image");
             }
             case "KAKAO" -> {
                 username = ((Map<String, String>) oAuth2User.getAttribute("properties")).get("nickname");
                 email = ((Map<String, String>) oAuth2User.getAttribute("kakao_account")).get("email");
 
                 if (!((Map<String, Map<String, Object>>) oAuth2User.getAttribute("kakao_account")).get("profile").get("is_default_image").equals("true")) {
-                    profileImage = ((Map<String, String>) oAuth2User.getAttribute("properties")).get("profile_image");
                 }
             }
             case "GOOGLE" -> {
                 username = oAuth2User.getAttribute("name");
                 email = oAuth2User.getAttribute("email");
-                profileImage = oAuth2User.getAttribute("picture");
             }
         }
 
-        MemberController.JoinForm joinForm = new MemberController.JoinForm(userId, username, "", email, "", profileImage);
+        MemberController.JoinForm joinForm = new MemberController.JoinForm(userId, username, "", email, "");
 
         return join(joinForm);
     }
