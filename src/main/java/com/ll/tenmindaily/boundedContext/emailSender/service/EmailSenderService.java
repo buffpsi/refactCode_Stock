@@ -1,7 +1,10 @@
 package com.ll.tenmindaily.boundedContext.emailSender.service;
 
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +21,16 @@ class GmailEmailSenderService implements EmailSenderService {
 
     @Override
     public void send(String to, String from, String title, String body) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setFrom(from);
-        message.setSubject(title);
-        message.setText(body);
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setFrom(new InternetAddress(from));
+            message.setSubject(title);
+            message.setContent(body, "text/html;charset=euc-kr");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
         mailSender.send(message);
     }
 }
