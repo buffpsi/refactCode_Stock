@@ -130,4 +130,24 @@ public class MemberController {
         redirectAttributes.addFlashAttribute("message", successMsg);
         return "redirect:/usr/member/login";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/modifyPassword")
+    public String showModifyPassword() {
+        return "/usr/member/modifyPassword";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/modifyPassword")
+    public String modifyPassword(String oldPassword, String password, RedirectAttributes redirectAttributes) {
+        Member actor = rq.getMember();
+        RsData modifyRsData = memberService.modifyPassword(actor, password, oldPassword);
+        redirectAttributes.addFlashAttribute("message", modifyRsData.getMsg());
+        if (modifyRsData.isFail()) {
+            return "redirect:/usr/member/modifyPassword";
+        }
+        return "redirect:/";
+    }
+
+
 }

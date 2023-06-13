@@ -164,4 +164,15 @@ public class MemberService {
     public void setTempPassword(Member actor, String tempPassword) {
         actor.setPassword(passwordEncoder.encode(tempPassword));
     }
+
+    @Transactional
+    public RsData modifyPassword(Member actor, String password, String oldPassword) {
+        if (!passwordEncoder.matches(oldPassword, actor.getPassword())) {
+            return RsData.of("F-1", "기존 비밀번호가 일치하지 않습니다.");
+        }
+
+        actor.setPassword(passwordEncoder.encode(password));
+
+        return RsData.of("S-1", "비밀번호가 변경되었습니다.");
+    }
 }
