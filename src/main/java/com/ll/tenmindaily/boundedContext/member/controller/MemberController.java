@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -44,7 +45,8 @@ public class MemberController {
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
-    public String showLogin() {
+    public String showLogin(@RequestParam(required = false) String userId, Model model) {
+        model.addAttribute("userId", userId);
         return "usr/member/login";
     }
 
@@ -75,7 +77,7 @@ public class MemberController {
         model.addAttribute("createdAt", actor.getCreatedAt());
         model.addAttribute("emailVerified", actor.getEmailVerified());
 
-        return "/usr/member/myPage";
+        return "usr/member/myPage";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -88,7 +90,7 @@ public class MemberController {
         model.addAttribute("email", actor.getEmail());
         model.addAttribute("emailVerified", actor.getEmailVerified());
 
-        return "/usr/member/editMyPage";
+        return "usr/member/editMyPage";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -105,6 +107,28 @@ public class MemberController {
     @GetMapping("/findPassword")
     public String showFindPassword() {
         return "/usr/member/findPassword";
+    }
+
+    @PreAuthorize("isAnonymous()")
+    @GetMapping("/findUserId")
+    public String showFindUserId() {
+        return "usr/member/findUserId";
+    }
+
+    @PreAuthorize("isAnonymous()")
+    @PostMapping("/findUserId")
+    public String findUserId(String email, RedirectAttributes redirectAttributes) {
+        Member actor = memberService.findByEmail(email).orElse(null);
+
+        if (actor == null) {
+            return "redirect:/usr/member/findUserId";
+        }
+
+        String foundedUserId = actor.getUserId();
+        String successMsg = "해당 이메일로 가입한 계정의 아이디는 '%s' 입니다.".formatted(foundedUserId);
+        //TODO: 사용자에게 성공 메시지 보여주기
+
+        return "redirect:/usr/member/login?userId=%s".formatted(foundedUserId);
     }
 
     @PreAuthorize("isAnonymous()")
@@ -134,7 +158,7 @@ public class MemberController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modifyPassword")
     public String showModifyPassword() {
-        return "/usr/member/modifyPassword";
+        return "usr/member/modifyPassword";
     }
 
     @PreAuthorize("isAuthenticated()")

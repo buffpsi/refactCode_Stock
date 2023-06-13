@@ -51,9 +51,11 @@
                                 <input
                                         type="text"
                                         class="input input-bordered block min-h-[auto] w-full py-[0.32rem]"
-                                        id="exampleFormControlInput3"
+                                        id="userId"
                                         name="username"
-                                        placeholder="아이디" />
+                                        placeholder="아이디"
+                                        th:value="${userId}"
+                                />
                             </div>
 
                             <!-- Password input -->
@@ -86,7 +88,7 @@
                                 <a
                                         href="/usr/member/findPassword"
                                         class="ml-80 text-primary"
-                                >비밀번호 찾기</a>
+                                >아이디/비밀번호 찾기</a>
                             </div>
 
                             <!-- Submit button -->

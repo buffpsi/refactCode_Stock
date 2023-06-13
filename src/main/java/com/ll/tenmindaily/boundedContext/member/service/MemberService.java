@@ -181,4 +181,8 @@ public class MemberService {
         memberRepository.delete(actor);
         return RsData.of("S-1", "회원 데이터가 성공적으로 삭제되었습니다.");
     }
+
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
 }
