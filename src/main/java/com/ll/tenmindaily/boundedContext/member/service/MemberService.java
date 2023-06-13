@@ -175,4 +175,10 @@ public class MemberService {
 
         return RsData.of("S-1", "비밀번호가 변경되었습니다.");
     }
+
+    @Transactional
+    public RsData deleteMember(Member actor) {
+        memberRepository.delete(actor);
+        return RsData.of("S-1", "회원 데이터가 성공적으로 삭제되었습니다.");
+    }
 }

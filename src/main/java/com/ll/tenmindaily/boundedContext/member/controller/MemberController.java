@@ -149,5 +149,11 @@ public class MemberController {
         return "redirect:/";
     }
 
-
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/withdrawal")
+    public String withdrawal() {
+        Member actor = rq.getMember();
+        memberService.deleteMember(actor);
+        return "redirect:/usr/member/login?logout";
+    }
 }
