@@ -2,10 +2,12 @@ package com.ll.tenmindaily.boundedContext.member.service;
 
 import com.ll.tenmindaily.base.exception.DataNotFoundException;
 import com.ll.tenmindaily.base.rsData.RsData;
+import com.ll.tenmindaily.boundedContext.email.service.EmailService;
 import com.ll.tenmindaily.boundedContext.emailVerification.service.EmailVerificationService;
 import com.ll.tenmindaily.boundedContext.member.controller.MemberController;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import com.ll.tenmindaily.boundedContext.member.repository.MemberRepository;
+import com.ll.tenmindaily.standard.util.Ut;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -25,6 +27,8 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     private final EmailVerificationService emailVerificationService;
+
+    private final EmailService emailService;
 
     @Transactional
     public RsData<Member> join(MemberController.JoinForm joinForm) {
@@ -126,5 +130,38 @@ public class MemberService {
         member.setEmailVerified(true);
 
         return RsData.of("S-1", "이메일인증이 완료되었습니다.");
+    }
+
+    public Optional<Member> findByUserIdAndEmail(String userId, String email) {
+        return memberRepository.findByUserIdAndEmail(userId, email);
+    }
+
+    @Transactional
+    public RsData sendTempPasswordToEmail(Member actor) {
+        String title = "[하루10분] 임시 패스워드 발송";
+        String tempPassword = Ut.getTempPassword(6);
+
+        String body = """
+                <!DOCTYPE html>
+                <html>
+                    <h1>임시 패스워드 : %s</h1>
+                    <a href="http://localhost:8080/usr/member/login" target="_blank">로그인 하러가기</a>
+                </html>
+                """.formatted(tempPassword);
+
+        RsData sendResultData = emailService.sendEmail(actor.getEmail(), title, body);
+
+        if (sendResultData.isFail()) {
+            return sendResultData;
+        }
+
+        setTempPassword(actor, tempPassword);
+
+        return RsData.of("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+    }
+
+    @Transactional
+    public void setTempPassword(Member actor, String tempPassword) {
+        actor.setPassword(passwordEncoder.encode(tempPassword));
     }
 }

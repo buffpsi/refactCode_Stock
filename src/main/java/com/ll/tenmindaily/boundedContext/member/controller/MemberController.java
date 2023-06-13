@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/usr/member")
@@ -53,6 +54,7 @@ public class MemberController {
         return "usr/member/join";
     }
 
+    @PreAuthorize("isAnonymous()")
     @PostMapping("/join")
     public String join(@Valid JoinForm joinForm) {
         RsData<Member> joinRs = memberService.join(joinForm);
@@ -99,4 +101,33 @@ public class MemberController {
         return "redirect:/usr/member/myPage";
     }
 
+    @PreAuthorize("isAnonymous()")
+    @GetMapping("/findPassword")
+    public String showFindPassword() {
+        return "/usr/member/findPassword";
+    }
+
+    @PreAuthorize("isAnonymous()")
+    @PostMapping("/findPassword")
+    public String findPassword(String userId, String email, RedirectAttributes redirectAttributes) {
+        Member member = memberService.findByUserIdAndEmail(userId, email).orElse(null);
+
+        if (member == null) {
+            String userNotFoundMsg = "일치하는 회원이 존재하지 않습니다.";
+            redirectAttributes.addFlashAttribute("message", userNotFoundMsg);
+            return "redirect:/usr/member/findPassword";
+        }
+
+        RsData sendTempLoginPwToEmailResultData = memberService.sendTempPasswordToEmail(member);
+
+        if (sendTempLoginPwToEmailResultData.isFail()) {
+            String errorMsg = sendTempLoginPwToEmailResultData.getMsg();
+            redirectAttributes.addFlashAttribute("message", errorMsg);
+            return "redirect:/usr/member/findPassword";
+        }
+
+        String successMsg = sendTempLoginPwToEmailResultData.getMsg();
+        redirectAttributes.addFlashAttribute("message", successMsg);
+        return "redirect:/usr/member/login";
+    }
 }
