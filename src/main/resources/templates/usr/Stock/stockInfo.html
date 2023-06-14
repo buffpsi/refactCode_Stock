@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>주식 정보</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#newsButton').click(function () {
+                var symbol = $('#symbol').text();
+                window.location.href = '/stocks/news/' + symbol;
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>주식 정보</h1>
+<table>
+    <tr>
+        <th>필드</th>
+        <th>값</th>
+    </tr>
+    <tr>
+        <td>티커</td>
+        <td th:text="${stock.getSymbol}"></td>
+    </tr>
+    <tr>
+        <td>전일 종가</td>
+        <td th:text="${stock.previousClose}"></td>
+    </tr>
+    <tr>
+        <td>주당 배당금</td>
+        <td th:text="${stock.dividendRate}"></td>
+    </tr>
+    <tr>
+        <td>주가의 배당 비율</td>
+        <td th:text="${stock.dividendYield}"></td>
+    </tr>
+    <tr>
+        <td>배당권 분리일</td>
+        <td th:text="${stock.exDividendDate}"></td>
+    </tr>
+    <tr>
+        <td>시가 총액</td>
+        <td th:text="${stock.marketCap}"></td>
+    </tr>
+    <tr>
+        <td>PER</td>
+        <td th:text="${stock.forwardPE}"></td>
+    </tr>
+    <tr>
+        <td>52주 최저가</td>
+        <td th:text="${stock.fiftyTwoWeekLow}"></td>
+    </tr>
+    <tr>
+        <td>52주 최고가</td>
+        <td th:text="${stock.fiftyTwoWeekHigh}"></td>
+    </tr>
+    <tr>
+        <td>52주 평균가</td>
+        <td th:text="${stock.fiftyDayAverage}"></td>
+    </tr>
+    <tr>
+        <td>최근 12개월 매출액 대비 주가 비율</td>
+        <td th:text="${stock.priceToSalesTrailing12Months}"></td>
+    </tr>
+    <tr>
+        <td>200일 이동 평균 주가</td>
+        <td th:text="${stock.twoHundredDayAverage}"></td>
+    </tr>
+    <tr>
+        <td>마감 종가</td>
+        <td th:text="${stock.currentPrice}"></td>
+    </tr>
+    <tr>
+        <td>애널리스트 목표 최고가</td>
+        <td th:text="${stock.targetHighPrice}"></td>
+    </tr>
+    <tr>
+        <td>애널리스트 목표 최저가</td>
+        <td th:text="${stock.targetLowPrice}"></td>
+    </tr>
+    <tr>
+        <td>애널리스트들의 평균가</td>
+        <td th:text="${stock.targetMedianPrice}"></td>
+    </tr>
+
+    <tr>
+        <td>매수 강력 추천</td>
+        <td th:text="${stock.strongBuy}"></td>
+    </tr>
+
+    <tr>
+        <td>매수 추천</td>
+        <td th:text="${stock.buy}"></td>
+    </tr>
+
+    <tr>
+        <td>중립</td>
+        <td th:text="${stock.hold}"></td>
+    </tr>
+
+    <tr>
+        <td>매도 추천</td>
+        <td th:text="${stock.sell}"></td>
+    </tr>
+
+    <tr>
+        <td>매도 강력 추천</td>
+        <td th:text="${stock.strongSell}"></td>
+    </tr>
+</table>
+<button id="newsButton">뉴스 보기</button>
+
+<span id="symbol" th:text="${stock.getSymbol}" style="display:none"></span>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{usr/layout/layout.html}">
+<head>
+    <style>
+        .coin-news {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .coin-news h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .coin-news p {
+            margin-bottom: 10px;
+        }
+
+        .coin-news .article-link {
+            margin-top: auto;
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .buttons .btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border: none;
+            background-color: #f1f1f1;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .buttons .btn.selected {
+            background-color: darkseagreen;
+            color: white;
+        }
+
+        .buttons .btn:hover {
+            color: white;
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" class="flex-grow flex items-center justify-center">
+    <div class="max-w-2xl w-full px-4">
+        <h1>Coin News</h1>
+        <hr>
+        <div class="buttons">
+            <a th:href="@{/coinNews/S1N1}" class="btn"
+               th:classappend="${sectionCode == 'S1N1'} ? 'selected' : ''">시장</a>
+            <a th:href="@{/coinNews/S1N2}" class="btn"
+               th:classappend="${sectionCode == 'S1N2'} ? 'selected' : ''">비지니스</a>
+            <a th:href="@{/coinNews/S1N3}" class="btn"
+               th:classappend="${sectionCode == 'S1N3'} ? 'selected' : ''">정책</a>
+            <a th:href="@{/coinNews/S1N4}" class="btn"
+               th:classappend="${sectionCode == 'S1N4'} ? 'selected' : ''">기술</a>
+            <a th:href="@{/coinNews/S1N5}" class="btn"
+               th:classappend="${sectionCode == 'S1N5'} ? 'selected' : ''">오피니언</a>
+        </div>
+        <ul>
+            <li th:each="item : ${coinNewsData.items}" class="coin-news">
+                <h3 th:text="${item.title}"></h3>
+                <p th:text="${item.lead}"></p>
+                <p th:text="${item.dateTime}"></p>
+                <a th:href="@{${item.url}}" class="article-link">Read more</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
