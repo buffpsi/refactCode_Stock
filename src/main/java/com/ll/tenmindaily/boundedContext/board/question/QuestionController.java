@@ -2,6 +2,7 @@ package com.ll.tenmindaily.boundedContext.board.question;
 
 
 
+import com.ll.tenmindaily.base.rq.Rq;
 import com.ll.tenmindaily.boundedContext.board.answer.AnswerForm;
 import com.ll.tenmindaily.boundedContext.board.category.Category;
 import com.ll.tenmindaily.boundedContext.board.category.CategoryService;
@@ -28,21 +29,18 @@ public class QuestionController {
     private final QuestionService questionService;
     private final MemberService memberService;
     private final CategoryService categoryService;
+    private final Rq rq;
 
-    @GetMapping("/list")
-    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page, ///@PathVariable("type") String type,
-                       @RequestParam(value = "kw", defaultValue = "") String kw){
-
-        Page<Question> paging = this.questionService.getList(page, kw);
-        model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
-        return "usr/board/question_list";
-    }
-
-    @GetMapping("/{type}/list")
-    public String list(Model model,  @PathVariable("type") String type, @RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "kw", defaultValue = "") String kw){
-        Page<Question> paging = this.questionService.getList(page, kw, type);
+    @GetMapping({"/list", "/{type}/list"})
+    public String list(Model model, @PathVariable(value = "type", required = false) String type,
+                       @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw) {
+        Page<Question> paging;
+        if (type != null) {
+            paging = this.questionService.getList(page, kw, type);
+        } else {
+            paging = this.questionService.getList(page, kw);
+        }
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         return "usr/board/question_list";
@@ -55,6 +53,8 @@ public class QuestionController {
         model.addAttribute("question", question);
         return "usr/board/question_detail";
     }
+
+
 
     //매개변수로 바인딩한 객체는 Model 객체로 전달하지 않아도 템플릿에서 사용이 가능=QuestionForm
     @PreAuthorize("isAuthenticated()") //로그인이 필요한 메서드
@@ -73,7 +73,7 @@ public class QuestionController {
     @PostMapping("/create")
     public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal){
         if(bindingResult.hasErrors()){
-            return "usr/board/question_form";
+            return rq.historyBack("권한이 없습니다");
         }
         Member member = this.memberService.getUser(principal.getName()); //---- 유저 객체 구현후 추후 수정 --------------------
         Category category = this.categoryService.getCategory(questionForm.getCategory());
@@ -134,5 +134,6 @@ public class QuestionController {
         this.questionService.vote(question, member);//------ 유저 객체 구현후 추후 수정 -------
         return String.format("redirect:/question/detail/%s", id);
     }
+
 
 }

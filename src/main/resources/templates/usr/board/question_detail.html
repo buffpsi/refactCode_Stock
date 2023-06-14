@@ -114,16 +114,15 @@
     </div>
     <!-- 답변 반복 끝  -->
 
+        <a th:href="@{|/answer/create/${question.id}|}">답변하기</a>
     <!-- 답변 작성 -->
-    <form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
+    <!--<form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
         <div th:replace="~{usr/board/form_errors :: formErrorsFragment}"></div>
-        <textarea  sec:authorize="isAnonymous()" disabled th:field="*{content}" rows="10" placeholder="답변입력"
-                  class="form-control textarea textarea-primary textarea-bordered textarea-lg w-full max-w-xs" ></textarea>
         <textarea sec:authorize="isAuthenticated()" th:field="*{content}" rows="10" placeholder="답변입력"
                   class="form-control textarea textarea-primary textarea-bordered textarea-lg w-full max-w-xs" ></textarea>
         <input type="submit" value="답변등록" class="btn btn-primary my-2">
     </form>
-    </div>
+    </div>-->
 </div>
 
 <script layout:fragment="script" type='text/javascript'>

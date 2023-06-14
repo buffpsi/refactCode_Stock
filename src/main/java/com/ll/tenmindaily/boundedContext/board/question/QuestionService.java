@@ -24,17 +24,6 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
-    /* public Page<Question> getList(int page, String kw, String typeName) {
-        List<Sort.Order> sorts = new ArrayList<>(); //정렬을 위한 리스트
-        sorts.add(Sort.Order.desc("createDate")); //역순 정렬
-
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        //page 조회할 페이지의 번호, 10:한 페이지에 보일게시물의 갯수
-        //역순으로 조회하기 위해서는 PageRequest.of 메서드의 세번째 파라미터로 Sort 객체를 전달
-        Specification<Question> spec = search(kw, typeName);
-        return this.questionRepository.findAll(spec, pageable);
-        //return this.questionRepository.findAllByKeyword(kw, pageable);
-    }*/
 
     public Page<Question> getList(int page, String kw) {
         List<Sort.Order> sorts = new ArrayList<>(); //정렬을 위한 리스트
@@ -119,26 +108,7 @@ public class QuestionService {
         };
     }
 
-     /*private Specification<Question> search(String kw, String typeName) {
 
-        return new Specification<>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public Predicate toPredicate(Root<Question> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                query.distinct(true);  // 중복을 제거
-                Join<Question, SiteUser> u1 = q.join("author", JoinType.LEFT);
-                Join<Question, Answer> a = q.join("answerList", JoinType.LEFT);
-                Join<Question, Category> c = q.join("category", JoinType.LEFT);
-                Join<Answer, SiteUser> u2 = a.join("author", JoinType.LEFT);
-                return cb.or(cb.like(q.get("subject"), "%" + kw + "%"), // 제목
-                        cb.like(q.get("content"), "%" + kw + "%"),      // 내용
-                        cb.like(u1.get("username"), "%" + kw + "%"),    // 질문 작성자
-                        cb.like(a.get("content"), "%" + kw + "%"),      // 답변 내용
-                        cb.like(u2.get("username"), "%" + kw + "%"),    // 답변 작성자
-                        cb.like(c.get("investment"), "%" + typeName + "%"));   // 카테고리
-            }
-        };
-    }*/
 
 
 }
