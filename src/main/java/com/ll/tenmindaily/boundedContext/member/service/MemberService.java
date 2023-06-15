@@ -55,7 +55,7 @@ public class MemberService {
                 .providerType(null)
                 .build();
 
-        emailVerificationService.send(memberRepository.save(member));
+        emailVerificationService.send(memberRepository.save(member), null);
 
         return RsData.of("S-1", "회원가입이 완료되었습니다.");
     }
@@ -149,7 +149,7 @@ public class MemberService {
                 </html>
                 """.formatted(tempPassword);
 
-        RsData sendResultData = emailService.sendEmail(actor.getEmail(), title, body);
+        RsData sendResultData = sendMail(actor.getEmail(), title, body);
 
         if (sendResultData.isFail()) {
             return sendResultData;
@@ -158,6 +158,15 @@ public class MemberService {
         setTempPassword(actor, tempPassword);
 
         return RsData.of("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+    }
+
+    public RsData sendMail(String to, String title, String body) {
+        return emailService.sendEmail(to, title, body);
+    }
+
+    public RsData sendVerificationMail(Member actor, String email) {
+        emailVerificationService.send(actor, email);
+        return RsData.of("S-1", "인증 메일을 성공적으로 '%s' 주소로 전송했습니다.");
     }
 
     @Transactional

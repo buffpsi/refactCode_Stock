@@ -2,6 +2,8 @@ package com.ll.tenmindaily.boundedContext.member.controller;
 
 import com.ll.tenmindaily.base.rq.Rq;
 import com.ll.tenmindaily.base.rsData.RsData;
+import com.ll.tenmindaily.boundedContext.emailVerification.Entity.EmailVerification;
+import com.ll.tenmindaily.boundedContext.emailVerification.service.EmailVerificationService;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import com.ll.tenmindaily.boundedContext.member.service.MemberService;
 import jakarta.validation.Valid;
@@ -19,11 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequestMapping("/usr/member")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+
+    private final EmailVerificationService emailVerificationService;
 
     private final Rq rq;
 
@@ -179,5 +185,26 @@ public class MemberController {
         Member actor = rq.getMember();
         memberService.deleteMember(actor);
         return "redirect:/usr/member/login?logout";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/emailVerification")
+    public String showEmailVerification() {
+        return "/usr/member/emailVerification";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/emailVerification")
+    public String emailVerification(String email) {
+        Member actor = rq.getMember();
+        String actorEmail = actor.getEmail();
+
+        if (!actorEmail.equals(email)) {
+            RsData.of("F-1", "기존 회원정보와 다른 이메일 주소입니다. 회원정보를 변경하거나, 기존 이메일 주소로 이메일 인증을 진행해주세요.");
+            return "redirect:/usr/member/myPage";
+        }
+
+        RsData verificationRsData = memberService.sendVerificationMail(actor, email);
+        return "redirect:/usr/member/myPage";
     }
 }

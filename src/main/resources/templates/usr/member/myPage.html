@@ -6,11 +6,6 @@
   <title>myPage</title>
 </head>
 <body layout:fragment="content" class="flex-col flex items-center justify-center">
-<script>
-  function withdrawalConfirmation() {
-
-  }
-</script>
 <main class="pt-2">
   <div class="flex justify-end">
     <div class="flex justify-end gap-1">
@@ -38,7 +33,7 @@
     <tr>
       <th>이메일 인증 여부</th>
       <td th:if="${emailVerified} == true" colspan="2">인증완료</td>
-      <td th:unless="${emailVerified}" colspan="2"><a href="" class="btn btn-sm">이메일 인증하러 가기</a></td>
+      <td th:unless="${emailVerified}" colspan="2"><a href="/usr/member/emailVerification" class="btn btn-sm">이메일 인증하러 가기</a></td>
     </tr>
   </table>
   <div class="flex justify-end">
