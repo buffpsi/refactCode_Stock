@@ -121,7 +121,7 @@
                     <div class="card-body">
                         <h5 class="card-title">배당금 정보</h5>
                         <span th:if="${stock.dividendRate != null}">
-                        <p class="card-text">
+                        <p class="card-text">다
                             👉 배당금 :
                             <span th:text="${stock.dividendRate}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
@@ -151,26 +151,27 @@
                         <h5 class="card-title">차트적 의미</h5>
                         <p class="card-text">
                             👉 52주 최저가 :
-                            <span th:text="${#numbers.formatInteger(stock.fiftyTwoWeekLow,3)}"></span>
+                            <span th:text="${#numbers.formatInteger(stock.fiftyTwoWeekLow,2)}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
                         </p>
                         <p class="card-text">
                             👉 52주 최고가 :
-                            <span th:text="${stock.fiftyTwoWeekHigh}"></span>
+                            <span th:text="${#numbers.formatInteger(stock.fiftyTwoWeekHigh,2)}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
                         </p>
                         <p class="card-text">
                             👉 52주 평균가 :
-                            <span th:text="${stock.fiftyDayAverage}"></span>
+                            <span th:text="${#numbers.formatInteger(stock.fiftyDayAverage,2)}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
                         </p>
                         <p class="card-text">
                             👉 최근 12개월 매출액 대비 주가 비율:
-                            <span th:text="${stock.priceToSalesTrailing12Months}"></span>
+                            <span th:text="${#numbers.formatDecimal(stock.priceToSalesTrailing12Months, 1, 2)}"></span>
+
                         </p>
                         <p class="card-text">
                             👉 200일 이동 평균주가 :
-                            <span th:text="${stock.twoHundredDayAverage}"></span>
+                            <span th:text="${#numbers.formatInteger(stock.twoHundredDayAverage,2)}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
                         </p>
                     </div>
@@ -183,17 +184,17 @@
                         <span th:if="${stock.targetHighPrice != null}">
                         <p class="card-text">
                             👉 애널리스트 목표 최고가 :
-                            <span th:text="${stock.targetHighPrice}"></span>
+                            <span th:text="${#numbers.formatInteger(stock.targetHighPrice,2)}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
                         </p>
                         <p class="card-text">
                             👉 애널리스트 목표 최저가 :
-                            <span th:text="${stock.targetLowPrice}"></span>
+                            <span th:text="${#numbers.formatInteger(stock.targetLowPrice,2)}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
                         </p>
                         <p class="card-text">
                             👉 애널리스트들의 평균가 :
-                            <span th:text="${stock.targetMedianPrice}"></span>
+                            <span th:text="${#numbers.formatInteger(stock.targetMedianPrice,2)}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
                         </p>
                     </span>
