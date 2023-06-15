@@ -56,6 +56,10 @@ dependencies {
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
 	implementation 'org.commonmark:commonmark:0.21.0'
 
+	//채팅
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework.security:spring-security-messaging'
+
 
 }
 
