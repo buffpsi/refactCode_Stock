@@ -3,6 +3,7 @@ package com.ll.tenmindaily.boundedContext.board.question;
 
 
 import com.ll.tenmindaily.base.exception.DataNotFoundException;
+import com.ll.tenmindaily.base.rsData.RsData;
 import com.ll.tenmindaily.boundedContext.board.answer.Answer;
 import com.ll.tenmindaily.boundedContext.board.category.Category;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
@@ -69,6 +70,8 @@ public class QuestionService {
         q.setCategory(category);
         this.questionRepository.save(q);
     }
+
+
 
     public void modify(Question question, String subject, String content, Category category){
         question.setSubject(subject);
