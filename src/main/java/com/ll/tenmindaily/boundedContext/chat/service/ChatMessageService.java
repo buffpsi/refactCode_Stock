@@ -7,6 +7,7 @@ import com.ll.tenmindaily.boundedContext.chat.entity.ChatMessageType;
 import com.ll.tenmindaily.boundedContext.chat.entity.ChatRoom;
 import com.ll.tenmindaily.boundedContext.chat.entity.ChatUser;
 import com.ll.tenmindaily.boundedContext.chat.repository.ChatMessageRepository;
+import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +23,15 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomService chatRoomService;
 
-    public ChatMessage createAndSave(String content, Long senderId, Long chatRoomId, ChatMessageType type) {
+    public ChatMessage createAndSave(String content, Member user, Long chatRoomId, ChatMessageType type) {
 
         ChatRoom chatRoom = chatRoomService.findById(chatRoomId);
+        chatRoom.addChatUser(user);
+
+
 
         ChatUser sender = chatRoom.getChatUsers().stream()
-                .filter(chatUser -> chatUser.getUser().getId().equals(senderId))
-                .findFirst()
-                .orElseThrow();
+                .filter(chatUser -> chatUser.getUser().getUserId().equals(user.getUserId())).findFirst().orElseThrow();
 
         ChatMessage chatMessage = ChatMessage.builder()
                 .content(content)
@@ -41,14 +43,8 @@ public class ChatMessageService {
         return chatMessageRepository.save(chatMessage);
     }
 
-    public List<ChatMessageDto> getByChatRoomIdAndUserIdAndFromId(Long roomId, Long userId, Long fromId) {
+    public List<ChatMessageDto> getByChatRoomIdAndUserIdAndFromId(Long roomId, Long fromId) {
 
-        ChatRoom chatRoom = chatRoomService.findById(roomId);
-
-        chatRoom.getChatUsers().stream()
-                .filter(chatUser -> chatUser.getUser().getId().equals(userId))
-                .findFirst()
-                .orElseThrow();
 
         List<ChatMessage> chatMessages = chatMessageRepository.findByChatRoomId(roomId);
 

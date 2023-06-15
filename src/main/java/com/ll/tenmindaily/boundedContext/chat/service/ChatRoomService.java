@@ -20,35 +20,26 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final MemberService memberService;
 
-    public ChatRoom createAndSave(String name, Long ownerId) {
+    public ChatRoom createAndSave(String name) {
 
-        Member owner = memberService.findByIdElseThrow(ownerId);
-
-        ChatRoom chatRoom = ChatRoom.create(name, owner);
+        ChatRoom chatRoom = ChatRoom.create(name);
 
         ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
-
-        chatRoom.addChatUser(owner);
 
         return savedChatRoom;
     }
 
-    public List<ChatRoom> findAll() {
+    public List<ChatRoom> findAll() { //채팅방 전체 찾기
         return chatRoomRepository.findAll();
     }
 
-    public ChatRoom findById(Long roomId) {
+
+    public ChatRoom findById(Long roomId) { //채팅방 이름으로 찾기
         return chatRoomRepository.findById(roomId).orElseThrow();
     }
 
-    public ChatRoomDto getByIdAndUserId(Long roomId, Long userId) {
+    public ChatRoomDto getById(Long roomId) { //채팅방 가져오기
         ChatRoom chatRoom = findById(roomId);
-
-        chatRoom.getChatUsers().stream()
-                .filter(chatUser -> chatUser.getUser().getId().equals(userId))
-                .findFirst()
-                .orElseThrow();
-
         return ChatRoomDto.fromChatRoom(chatRoom);
     }
 }

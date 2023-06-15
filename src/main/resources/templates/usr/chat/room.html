@@ -12,21 +12,15 @@
 </head>
 <body>
 <div layout:fragment="content" class="flex-grow flex items-center justify-center">
-    <div class="max-w-2xl w-full px-4">
+    <div class="max-w-3xl w-full px-4">
         <table class="tb_col">
             <tr>
                 <th>방번호</th>
                 <th>이름</th>
-                <th>채팅방 주인</th>
-                <th>생성일</th>
-                <th>최근 대화</th>
             </tr>
             <tr>
                 <td th:text="${chatRoom.id}"></td>
                 <td th:text="${chatRoom.name}"></td>
-                <td th:text="${chatRoom.owner.username}"></td>
-                <td th:text="${chatRoom.createdAt}"></td>
-                <td th:text="${chatRoom.updatedAt}"></td>
             </tr>
         </table>
         <form class="chat__write-message" onsubmit="ChatWriteMessage(this); return false;">

@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -22,26 +23,22 @@ public class ChatRoomDto {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("owner")
-    private MemberDto owner;
-
-    @JsonProperty("created_at")
-    private LocalDateTime createdAt;
-
-    @JsonProperty("updated_at")
-    private LocalDateTime updatedAt;
-
     public static ChatRoomDto fromChatRoom(ChatRoom chatRoom) {
-        MemberDto memberDto = MemberDto.fromUser(chatRoom.getOwner());
+        MemberDto memberDto = new MemberDto(); //emberDto.fromUser(chatRoom.getName());
 
         ChatRoomDto chatRoomDto = ChatRoomDto.builder()
                 .id(chatRoom.getId())
                 .name(chatRoom.getName())
-                .owner(memberDto)
-                .createdAt(chatRoom.getCreatedAt())
-                .updatedAt(chatRoom.getUpdatedAt())
                 .build();
 
         return chatRoomDto;
+    }
+
+    public static ChatRoomDto create(String name){
+        ChatRoomDto room = new ChatRoomDto();
+
+        room.id = Long.valueOf(UUID.randomUUID().toString());
+        room.name = name;
+        return room;
     }
 }

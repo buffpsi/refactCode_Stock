@@ -64,8 +64,20 @@ public class MemberService {
         return memberRepository.findByUsername(username);
     }
 
+
+    public Member findByIdElseThrow(Long Id) {
+        return memberRepository.findById(Id).orElseThrow();
+    }
+
+
+
+
     public Optional<Member> findByUserId(String userId) {
         return memberRepository.findByUserId(userId);
+    }
+
+    public Member findByUserIdWithoutOptional(String userId) {
+        return memberRepository.findByUserId(userId).orElseThrow();
     }
 
     public Member getUser(String userId) {

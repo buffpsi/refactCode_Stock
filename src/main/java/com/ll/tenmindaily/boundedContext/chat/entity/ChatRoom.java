@@ -21,7 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor
 public class ChatRoom {
 
     @Id
@@ -29,9 +29,6 @@ public class ChatRoom {
     private Long id;
 
     private String name;
-
-    @ManyToOne(fetch = LAZY)
-    private Member owner;
 
     @OneToMany(mappedBy = "chatRoom", cascade = PERSIST)
     @Builder.Default
@@ -42,14 +39,12 @@ public class ChatRoom {
     private LocalDateTime updatedAt;
 
 
-    public static ChatRoom create(String name, Member owner) {
+    public static ChatRoom create(String name) {
 
         Assert.notNull(name, "name는 널일 수 없습니다.");
-        Assert.notNull(owner, "owner는 널일 수 없습니다.");
 
         ChatRoom chatRoom = ChatRoom.builder()
                 .name(name)
-                .owner(owner)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();

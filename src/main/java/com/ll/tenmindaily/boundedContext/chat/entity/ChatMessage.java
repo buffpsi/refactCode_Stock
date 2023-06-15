@@ -32,9 +32,6 @@ public class ChatMessage {
     @ManyToOne(fetch = LAZY)
     private ChatRoom chatRoom;
 
-    @Enumerated(STRING)
-    private ChatMessageType type;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

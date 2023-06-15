@@ -18,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CustomOAuth2AccessTokenResponseClient oAuth2AccessTokenResponseClient;
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

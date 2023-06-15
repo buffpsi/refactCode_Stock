@@ -73,7 +73,7 @@ public class QuestionController {
     @PostMapping("/create")
     public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal){
         if(bindingResult.hasErrors()){
-            return rq.historyBack("권한이 없습니다");
+            return "usr/board/question_form";
         }
         Member member = this.memberService.getUser(principal.getName()); //---- 유저 객체 구현후 추후 수정 --------------------
         Category category = this.categoryService.getCategory(questionForm.getCategory());
@@ -87,7 +87,7 @@ public class QuestionController {
         Question question = this.questionService.getQuestion(id);
         if(!question.getAuthor().getUserId().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
-        } //---- 유저 객체 구현후 추후 수정 --------------------
+        }
         questionForm.setSubject(question.getSubject());
         questionForm.setContent(question.getContent());
         questionForm.setCategory(question.getCategory().getInvestment());

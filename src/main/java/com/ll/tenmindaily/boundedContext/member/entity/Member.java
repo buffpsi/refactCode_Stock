@@ -28,8 +28,8 @@ public class Member {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    private String userId;
-    private String username;
+    private String userId; //nagt1997
+    private String username; //나길태
     private String password;
     @Email
     private String email;

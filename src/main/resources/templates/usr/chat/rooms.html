@@ -1,6 +1,6 @@
 <html layout:decorate="~{usr/layout/layout.html}" lang="kr" xmlns:layout="http://www.thymeleaf.org">
 <div layout:fragment="content" class="flex-grow flex items-center justify-center">
-    <div class="max-w-2xl w-full px-4">
+    <div class="max-w-3xl w-full px-4">
         <a th:href="@{/rooms/new}" class="btn btn-outline">새 채팅방</a>
         <div class="overflow-x-auto">
         <table class="table table-zebra">
@@ -8,7 +8,6 @@
                 <tr>
                     <th>id</th>
                     <th>채팅방</th>
-                    <th>방장</th>
                     <th>생성일</th>
                     <th>수정일</th>
                     <th>입장</th>
@@ -19,7 +18,6 @@
 
                     <td th:text="${chatRoom.id}"></td>
                     <td th:text="${chatRoom.name}"></td>
-                    <td th:text="${chatRoom.owner.username}"></td>
                     <td th:text="${chatRoom.createdAt}"></td>
                     <td th:text="${chatRoom.updatedAt}"></td>
                     <td>

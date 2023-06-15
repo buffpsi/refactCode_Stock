@@ -65,7 +65,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-/*1대1과 다중
+
+/*
 let stompClient = null;
 let multiChatRoomId = 'multi'; // 다중 채팅방 ID
 let oneToOneChatRoomId = 'one-to-one'; // 1대1 채팅방 ID
