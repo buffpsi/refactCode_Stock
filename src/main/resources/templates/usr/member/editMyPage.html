@@ -12,6 +12,8 @@
     let form = null;
     let formInputs = null;
 
+    let isConfirmed = false;
+
     window.addEventListener('load', function (e) {
       form = document.getElementById('myPageEditForm');
       formInputs = form.getElementsByTagName('input');
@@ -23,7 +25,8 @@
     });
 
     window.addEventListener('beforeunload', function (event) {
-      if (hasUnsavedChanges()) {
+      if (hasUnsavedChanges() && !isConfirmed) {
+
         event.preventDefault();
         event.returnValue = '변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?';
       }
@@ -82,13 +85,13 @@
           form.email.focus();
           return;
         }
+        isConfirmed = true;
 
         form.submit();
       }
     }
   </script>
   <div class="flex justify-end gap-1">
-    <button class="btn btn-sm">비밀번호 수정하기</button>
     <button class="btn btn-sm" onclick="submitEditForm()">적용하기</button>
     <button class="btn btn-sm" onclick="
     if (hasUnsavedChanges()) {
@@ -112,11 +115,6 @@
       <tr>
         <th>이메일</th>
         <td colspan="2"><input name="email" type="text" th:value="${email}"></td>
-      </tr>
-      <tr>
-        <th>이메일 인증 여부</th>
-        <td th:if="${emailVerified} == true" colspan="2">인증완료</td>
-        <td th:unless="${emailVerified}" colspan="2"><a href="" class="btn btn-sm">이메일 인증하러 가기</a></td>
       </tr>
     </table>
   </form>

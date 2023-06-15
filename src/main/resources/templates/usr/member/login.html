@@ -6,7 +6,6 @@
     <title>Login</title>
 </head>
 <body layout:fragment="content" class="flex-col flex items-center justify-center">
-
     <script>
         function LoginForm__submit(form) {
             form.username.value = form.username.value.trim();
@@ -51,17 +50,19 @@
                             <div class="relative mb-6" data-te-input-wrapper-init>
                                 <input
                                         type="text"
-                                        class=" block min-h-[auto] w-full rounded border-2 px-3 py-[0.32rem] leading-[2.15]"
-                                        id="exampleFormControlInput3"
+                                        class="input input-bordered block min-h-[auto] w-full py-[0.32rem]"
+                                        id="userId"
                                         name="username"
-                                        placeholder="아이디" />
+                                        placeholder="아이디"
+                                        th:value="${userId}"
+                                />
                             </div>
 
                             <!-- Password input -->
                             <div class="relative mb-6" data-te-input-wrapper-init>
                                 <input
                                         type="password"
-                                        class=" block min-h-[auto] w-full rounded border-2 px-3 py-[0.32rem] leading-[2.15]"
+                                        class="input input-bordered block min-h-[auto] w-full py-[0.32rem]"
                                         id="exampleFormControlInput33"
                                         name="password"
                                         placeholder="비밀번호" />
@@ -85,9 +86,9 @@
 
                                 <!-- Forgot password link -->
                                 <a
-                                        href="#!"
+                                        href="/usr/member/findPassword"
                                         class="ml-80 text-primary"
-                                >비밀번호 찾기</a>
+                                >아이디/비밀번호 찾기</a>
                             </div>
 
                             <!-- Submit button -->

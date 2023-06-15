@@ -36,9 +36,6 @@ public class Member {
     private String providerType;
     private Boolean emailVerified;
     private String nickname;
-    private String interest1;
-    private String interest2;
-    private String profileImage;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate

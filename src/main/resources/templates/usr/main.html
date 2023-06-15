@@ -5,6 +5,12 @@
 
 
 <div layout:fragment="content" class="flex-grow flex items-center justify-center">
+    <script th:inline="javascript">
+        const message = /*[[ ${message} ]]*/ null;
+        if (message) {
+            alert(message);
+        }
+    </script>
     <div class="max-w-2xl w-full px-4">
         <h1>메인페이지 입니다.</h1>
         <h1>여기에 콘텐츠가 들어갑니다.</h1>
