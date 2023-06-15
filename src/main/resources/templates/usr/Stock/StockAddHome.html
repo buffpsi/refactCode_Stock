@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Stock Data</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function addStock(exchange) {
+            var symbol = $('#symbolInput').val();
+
+            // 심볼이 입력되었을 때만 처리
+            if (symbol !== '') {
+                // 심볼에 거래소 정보를 붙여줌
+                symbol += exchange;
+
+                var csrfToken = $("meta[name='_csrf']").attr("content");
+                var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+                var headers = {};
+                headers[csrfHeader] = csrfToken;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/stocks/add/' + symbol,
+                    headers: headers,
+                    success: function (response) {
+                        if (response === 2) {
+                            alert('이미 추가된 종목입니다.');
+                        } else if (response === 1) {
+                            alert('종목이 추가되었습니다.');
+                            showStockList(); // Stock 추가 후 목록을 다시 보여줌
+                        } else {
+                            alert('종목 추가에 실패했습니다.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('존재하지 않는 티커입니다.');
+                    }
+                });
+            }
+        }
+
+        function showStockList() {
+            $.ajax({
+                type: 'GET',
+                url: '/stocks/list',
+                success: function (response) {
+                    var stockList = $('#stockList');
+                    stockList.empty();
+                    response.forEach(function (stock) {
+                        var symbol = stock.symbol;
+                        var stockInfoUrl = '/stocks/show?symbol=' + symbol;  // 수정된 부분
+
+                        var stockItem = $('<p></p>')
+                            .text(symbol)
+                            .css('cursor', 'pointer')
+                            .click(function () {
+                                window.location.href = stockInfoUrl;
+                            });
+
+                        stockList.append(stockItem);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert('Stock 목록을 가져오는데 실패했습니다.');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            showStockList(); // 페이지 로드 시 Stock 목록을 보여줌
+        });
+    </script>
+</head>
+<body>
+<h1>Stock Data</h1>
+<input type="text" id="symbolInput" placeholder="종목을 입력하세요">
+<button onclick="addStock('')">미국 추가</button>
+<button onclick="addStock('.ks')">코스피 추가</button>
+<button onclick="addStock('.kq')">코스닥 추가</button>
+<div id="stockList"></div>
+</body>
+</html>

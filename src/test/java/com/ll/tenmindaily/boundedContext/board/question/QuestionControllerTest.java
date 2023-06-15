@@ -71,7 +71,7 @@ class QuestionControllerTest {
     }
 
     @Test
-    void testcategory(){ //테스트 카테고리 만들기
+    void createCategory(){ //테스트 카테고리 만들기
         Category c1 = new Category();
         c1.setId(1);
         c1.setInvestment("stock");
@@ -81,24 +81,8 @@ class QuestionControllerTest {
         c2.setId(2);
         c2.setInvestment("coin");
         categoryRepository.save(c2);
-
-        Category c3 = new Category();
-        c3.setId(3);
-        c3.setInvestment("realestate");
-        categoryRepository.save(c3);
     }
 
-/*
-    @Test
-    void testFindAll() {
-        List<Question> all = this.questionRepository.findAll();
-        //findAll은 데이터를 조회할때 사용하는 메서드
-        assertEquals(38, all.size()); //게시물 전체 숫자
-
-        Question q = all.get(0);
-        assertEquals("sbb가 뭐임?", q.getSubject());
-    }
-*/
 
     @Test
     void testFindById() {

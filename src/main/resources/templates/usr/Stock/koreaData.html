@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>KOSPI Ranking</title>
+</head>
+<body>
+<h1>KOSPI Ranking</h1>
+<table>
+    <tr>
+        <th>기업명</th>
+        <th>티커</th>
+    </tr>
+    <tr th:each="ranking : ${rankings}">
+        <td th:text="${ranking.companyName}"></td>
+        <td th:text="${ranking.ticker}"></td>
+    </tr>
+</table>
+</body>
+</html>
