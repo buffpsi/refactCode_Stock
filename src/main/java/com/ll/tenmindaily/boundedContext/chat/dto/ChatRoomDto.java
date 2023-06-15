@@ -24,8 +24,6 @@ public class ChatRoomDto {
     private String name;
 
     public static ChatRoomDto fromChatRoom(ChatRoom chatRoom) {
-        MemberDto memberDto = new MemberDto(); //emberDto.fromUser(chatRoom.getName());
-
         ChatRoomDto chatRoomDto = ChatRoomDto.builder()
                 .id(chatRoom.getId())
                 .name(chatRoom.getName())

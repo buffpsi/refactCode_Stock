@@ -13,21 +13,27 @@
 <body>
 <div layout:fragment="content" class="flex-grow flex items-center justify-center">
     <div class="max-w-3xl w-full px-4">
-        <table class="tb_col">
+        <div class="overflow-x-auto">
+        <table class="table table-zebra items-center justify-center m-4">
             <tr>
                 <th>방번호</th>
-                <th>이름</th>
+                <th>제목</th>
             </tr>
             <tr>
                 <td th:text="${chatRoom.id}"></td>
                 <td th:text="${chatRoom.name}"></td>
             </tr>
         </table>
-        <form class="chat__write-message" onsubmit="ChatWriteMessage(this); return false;">
-            <input type="text" placeholder="내용을 입력해주세요." name="content">
-            <input type="submit" value="작성">
+        </div>
+
+        <form class="chat__write-message m-4" onsubmit="ChatWriteMessage(this); return false;">
+            <input type="text" placeholder="내용을 입력해주세요." name="content" class="input input-bordered input-primary w-full max-w-xs">
+            <input type="submit" value="작성" class = "btn">
         </form>
-        <li class="chat__message-ul"></li>
+
+        <div class="max-w-2xl max-h-2xl w-full h-full border border-black">
+            <li class="chat__message-ul"></li>
+        </div>
     </div>
 </div>
 </body>

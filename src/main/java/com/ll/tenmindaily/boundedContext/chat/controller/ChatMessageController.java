@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -36,7 +37,6 @@ import static com.ll.tenmindaily.boundedContext.chat.response.SignalType.NEW_MES
 @RequiredArgsConstructor
 public class ChatMessageController {
 
-    private final SimpMessagingTemplate template;
     private final ChatMessageService chatMessageService;
     @Autowired
     private  MemberService memberService;
@@ -54,10 +54,10 @@ public class ChatMessageController {
                 .build();
     }
 
-    /*@MessageExceptionHandler
+    @MessageExceptionHandler
     public void handleException(Exception ex) {
         System.out.println("예외 발생!!");
-    }*/
+    }
 
     @GetMapping("/rooms/{roomId}/messages")
     @ResponseBody

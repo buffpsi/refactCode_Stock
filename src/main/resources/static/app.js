@@ -35,7 +35,7 @@ function ChatWriteMessage(form) {
 
     form.content.value = form.content.value.trim();
 
-    stompClient.send(`/app/chats/${chatRoomId}/sendMessage`, {}, JSON.stringify({content: form.content.value}));
+    stompClient.send(`/app/chats/${chatRoomId}/sendMessage`, {}, JSON.stringify({content:form.content.value}));
 
     form.content.value = '';
     form.content.focus();
