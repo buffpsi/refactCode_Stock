@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableAsync
 public class TenmindailyApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(TenmindailyApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TenmindailyApplication.class, args);
+    }
 }

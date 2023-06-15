@@ -2,7 +2,8 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{usr/layout/layout.html}">
 <head>
-    <meta charset="UTF-8" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta charset="UTF-8"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Login</title>
 </head>
 <body>
@@ -100,7 +101,8 @@
 
     <h1 class="pt-2">회원가입</h1>
     <hr>
-    <form th:action="@{/usr/member/join}" method="POST" class="flex flex-col justify-center" onsubmit="JoinForm__submit(this); return false;">
+    <form th:action="@{/usr/member/join}" method="POST" class="flex flex-col justify-center"
+          onsubmit="JoinForm__submit(this); return false;">
         <table class="table">
             <tr class="gap-5">
                 <td class="text-right pr-4">

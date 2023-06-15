@@ -2,122 +2,124 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{usr/layout/layout.html}">
 <head>
-  <meta charset="UTF-8" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>myPage</title>
+    <meta charset="UTF-8"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>myPage</title>
 </head>
 <body layout:fragment="content" class="flex-col flex items-center justify-center">
 <main class="pt-2">
-  <script>
-    const initialFormValues = {};
-    let form = null;
-    let formInputs = null;
+    <script>
+        const initialFormValues = {};
+        let form = null;
+        let formInputs = null;
 
-    let isConfirmed = false;
+        let isConfirmed = false;
 
-    window.addEventListener('load', function (e) {
-      form = document.getElementById('myPageEditForm');
-      formInputs = form.getElementsByTagName('input');
+        window.addEventListener('load', function (e) {
+            form = document.getElementById('myPageEditForm');
+            formInputs = form.getElementsByTagName('input');
 
-      for (let i = 0; i < formInputs.length; i++) {
-        const input = formInputs[i];
-        initialFormValues[input.name] = input.value;
-      }
-    });
+            for (let i = 0; i < formInputs.length; i++) {
+                const input = formInputs[i];
+                initialFormValues[input.name] = input.value;
+            }
+        });
 
-    window.addEventListener('beforeunload', function (event) {
-      if (hasUnsavedChanges() && !isConfirmed) {
+        window.addEventListener('beforeunload', function (event) {
+            if (hasUnsavedChanges() && !isConfirmed) {
 
-        event.preventDefault();
-        event.returnValue = '변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?';
-      }
-    });
+                event.preventDefault();
+                event.returnValue = '변경 사항이 저장되지 않습니다. 페이지를 떠나시겠습니까?';
+            }
+        });
 
-    function hasUnsavedChanges() {
-      const currentFormValues = {};
+        function hasUnsavedChanges() {
+            const currentFormValues = {};
 
-      for (let i = 0; i < formInputs.length; i++) {
-        const input = formInputs[i];
-        currentFormValues[input.name] = input.value;
-      }
+            for (let i = 0; i < formInputs.length; i++) {
+                const input = formInputs[i];
+                currentFormValues[input.name] = input.value;
+            }
 
-      for (const key in currentFormValues) {
-        if (currentFormValues.hasOwnProperty(key)) {
-          if (currentFormValues[key] !== initialFormValues[key]) {
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-
-    function validateEmail(email) {
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-      return emailPattern.test(email);
-    }
-
-    function submitEditForm() {
-      if (confirm('변경 사항을 저장하시겠습니까?')) {
-        form.username.value = form.username.value.trim();
-
-        if (form.username.value.length === 0) {
-          alert('이름을 입력해주세요.');
-          form.username.focus();
-          return;
+            for (const key in currentFormValues) {
+                if (currentFormValues.hasOwnProperty(key)) {
+                    if (currentFormValues[key] !== initialFormValues[key]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
-        form.nickname.value = form.nickname.value.trim();
+        function validateEmail(email) {
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-        if (form.nickname.value.length === 0) {
-          alert('닉네임을 입력해주세요.');
-          form.nickname.focus();
-          return;
+            return emailPattern.test(email);
         }
 
-        form.email.value = form.email.value.trim();
+        function submitEditForm() {
+            if (confirm('변경 사항을 저장하시겠습니까?')) {
+                form.username.value = form.username.value.trim();
 
-        if (form.email.value.length === 0) {
-          alert('이메일을 입력해주세요.');
-          form.email.focus();
-          return;
-        } else if (!validateEmail(form.email.value)) {
-          alert('올바른 형식의 이메일 주소를 입력해주세요.');
-          form.email.focus();
-          return;
+                if (form.username.value.length === 0) {
+                    alert('이름을 입력해주세요.');
+                    form.username.focus();
+                    return;
+                }
+
+                form.nickname.value = form.nickname.value.trim();
+
+                if (form.nickname.value.length === 0) {
+                    alert('닉네임을 입력해주세요.');
+                    form.nickname.focus();
+                    return;
+                }
+
+                form.email.value = form.email.value.trim();
+
+                if (form.email.value.length === 0) {
+                    alert('이메일을 입력해주세요.');
+                    form.email.focus();
+                    return;
+                } else if (!validateEmail(form.email.value)) {
+                    alert('올바른 형식의 이메일 주소를 입력해주세요.');
+                    form.email.focus();
+                    return;
+                }
+                isConfirmed = true;
+
+                form.submit();
+            }
         }
-        isConfirmed = true;
-
-        form.submit();
-      }
-    }
-  </script>
-  <div class="flex justify-end gap-1">
-    <button class="btn btn-sm" onclick="submitEditForm()">적용하기</button>
-    <button class="btn btn-sm" onclick="
+    </script>
+    <div class="flex justify-end gap-1">
+        <button class="btn btn-sm" onclick="submitEditForm()">적용하기</button>
+        <button class="btn btn-sm" onclick="
     if (hasUnsavedChanges()) {
       if (!confirm('변경 사항이 저장되지 않습니다. 취소하시겠습니까?')) {
         return;
       }
     }
     window.location.href = 'http://localhost:8080/usr/member/myPage';
-    ">취소</button>
-  </div>
-  <form id="myPageEditForm" th:action="@{/usr/member/editMyPage}" method="POST">
-    <table class="table" style="width: 500px">
-      <tr>
-        <th>이름</th>
-        <td colspan="2"><input name="username" type="text" th:value="${username}"></td>
-      </tr>
-      <tr>
-        <th>닉네임</th>
-        <td colspan="2"><input name="nickname" type="text" th:value="${nickname}"></td>
-      </tr>
-      <tr>
-        <th>이메일</th>
-        <td colspan="2"><input name="email" type="text" th:value="${email}"></td>
-      </tr>
-    </table>
-  </form>
+    ">취소
+        </button>
+    </div>
+    <form id="myPageEditForm" th:action="@{/usr/member/editMyPage}" method="POST">
+        <table class="table" style="width: 500px">
+            <tr>
+                <th>이름</th>
+                <td colspan="2"><input name="username" type="text" th:value="${username}"></td>
+            </tr>
+            <tr>
+                <th>닉네임</th>
+                <td colspan="2"><input name="nickname" type="text" th:value="${nickname}"></td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td colspan="2"><input name="email" type="text" th:value="${email}"></td>
+            </tr>
+        </table>
+    </form>
 </main>
 </body>
 </html>

@@ -34,6 +34,6 @@ public class EmailVerificationController {
             return "redirect:/usr/member/login";
         }
 
-        return"redirect:/";
+        return "redirect:/";
     }
 }

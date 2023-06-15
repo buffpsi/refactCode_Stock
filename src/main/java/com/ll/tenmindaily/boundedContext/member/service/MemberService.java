@@ -127,7 +127,7 @@ public class MemberService {
         actor.setNickname(joinForm.getNickname());
         actor.setEmail(joinForm.getEmail());
 
-        return RsData.of("S-1","성공적으로 수정되었습니다.", memberRepository.save(actor));
+        return RsData.of("S-1", "성공적으로 수정되었습니다.", memberRepository.save(actor));
     }
 
     @Transactional

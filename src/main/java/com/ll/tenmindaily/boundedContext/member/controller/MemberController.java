@@ -2,7 +2,6 @@ package com.ll.tenmindaily.boundedContext.member.controller;
 
 import com.ll.tenmindaily.base.rq.Rq;
 import com.ll.tenmindaily.base.rsData.RsData;
-import com.ll.tenmindaily.boundedContext.emailVerification.Entity.EmailVerification;
 import com.ll.tenmindaily.boundedContext.emailVerification.service.EmailVerificationService;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import com.ll.tenmindaily.boundedContext.member.service.MemberService;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/usr/member")

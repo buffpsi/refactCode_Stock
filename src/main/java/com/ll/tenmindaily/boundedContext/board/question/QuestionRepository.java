@@ -12,9 +12,13 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
     //엔티티의 타입(Question)과 해당 엔티티의 PK의 속성 타입
     Question findBySubject(String subject);
+
     Question findBySubjectAndContent(String subject, String content);
+
     List<Question> findBySubjectLike(String subject);
+
     Page<Question> findAll(Pageable pageable);
+
     Page<Question> findAll(Specification<Question> spec, Pageable pageable);
 
     @Query("select "
@@ -30,7 +34,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
             + "   or a.content like %:kw% "
             + "   or u2.username like %:kw% ")
     Page<Question> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
-
 
 
 }

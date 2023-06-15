@@ -1,7 +1,6 @@
 package com.ll.tenmindaily.boundedContext.board.question;
 
 
-
 import com.ll.tenmindaily.base.rq.Rq;
 import com.ll.tenmindaily.boundedContext.board.answer.AnswerForm;
 import com.ll.tenmindaily.boundedContext.board.category.Category;
@@ -55,11 +54,10 @@ public class QuestionController {
     }
 
 
-
     //매개변수로 바인딩한 객체는 Model 객체로 전달하지 않아도 템플릿에서 사용이 가능=QuestionForm
     @PreAuthorize("isAuthenticated()") //로그인이 필요한 메서드
     @GetMapping("/create")
-    public String questionCreate(Model model, QuestionForm questionForm){
+    public String questionCreate(Model model, QuestionForm questionForm) {
         model.addAttribute("categoryList", categoryService.getinvestmentType());
         return "usr/board/question_form";
     }
@@ -83,9 +81,9 @@ public class QuestionController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String questionModify(QuestionForm questionForm, Model model, @PathVariable("id") Integer id, Principal principal){
+    public String questionModify(QuestionForm questionForm, Model model, @PathVariable("id") Integer id, Principal principal) {
         Question question = this.questionService.getQuestion(id);
-        if(!question.getAuthor().getUserId().equals(principal.getName())){
+        if (!question.getAuthor().getUserId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         questionForm.setSubject(question.getSubject());
@@ -98,15 +96,15 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult,
-                                 Principal principal, @PathVariable("id") Integer id){
-        if(bindingResult.hasErrors()){
+                                 Principal principal, @PathVariable("id") Integer id) {
+        if (bindingResult.hasErrors()) {
 
             return "usr/board/question_form";
         }
 
         Question question = this.questionService.getQuestion(id);
 
-        if(!question.getAuthor().getUserId().equals(principal.getName())){
+        if (!question.getAuthor().getUserId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
@@ -117,9 +115,9 @@ public class QuestionController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
-    public String questionDelete(Principal principal, @PathVariable("id") Integer id){
+    public String questionDelete(Principal principal, @PathVariable("id") Integer id) {
         Question question = this.questionService.getQuestion(id);
-        if(!question.getAuthor().getUserId().equals(principal.getName())){
+        if (!question.getAuthor().getUserId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
         }//---- 유저 객체 구현후 추후 수정 --------------------
         this.questionService.delete(question);
@@ -128,7 +126,7 @@ public class QuestionController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/vote/{id}")
-    public String questionVote(Principal principal, @PathVariable("id") Integer id){
+    public String questionVote(Principal principal, @PathVariable("id") Integer id) {
         Question question = this.questionService.getQuestion(id);
         Member member = this.memberService.getUser(principal.getName());//---- 유저 객체 구현후 추후 수정 -------
         this.questionService.vote(question, member);//------ 유저 객체 구현후 추후 수정 -------

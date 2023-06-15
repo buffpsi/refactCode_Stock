@@ -21,7 +21,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-public class SendEmailLog{
+public class SendEmailLog {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
