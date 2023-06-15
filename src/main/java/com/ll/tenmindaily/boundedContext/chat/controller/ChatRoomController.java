@@ -1,6 +1,9 @@
 package com.ll.tenmindaily.boundedContext.chat.controller;
 
 import com.ll.tenmindaily.base.rq.Rq;
+import com.ll.tenmindaily.boundedContext.chat.dto.ChatRoomDto;
+import com.ll.tenmindaily.boundedContext.chat.entity.ChatRoom;
+import com.ll.tenmindaily.boundedContext.chat.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

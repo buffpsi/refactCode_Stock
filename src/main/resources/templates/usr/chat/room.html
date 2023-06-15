@@ -1,0 +1,40 @@
+<html layout:decorate="~{usr/layout/layout.html}" lang="kr" xmlns:layout="http://www.thymeleaf.org">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:inline="javascript">
+        const chatRoomId = /*[[${chatRoom.id}]]*/ '';
+        const token = /*[[${_csrf.token}]]*/ '';
+    </script>
+    <script th:src="@{/app.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" class="flex-grow flex items-center justify-center">
+    <div class="max-w-2xl w-full px-4">
+        <table class="tb_col">
+            <tr>
+                <th>방번호</th>
+                <th>이름</th>
+                <th>채팅방 주인</th>
+                <th>생성일</th>
+                <th>최근 대화</th>
+            </tr>
+            <tr>
+                <td th:text="${chatRoom.id}"></td>
+                <td th:text="${chatRoom.name}"></td>
+                <td th:text="${chatRoom.owner.username}"></td>
+                <td th:text="${chatRoom.createdAt}"></td>
+                <td th:text="${chatRoom.updatedAt}"></td>
+            </tr>
+        </table>
+        <form class="chat__write-message" onsubmit="ChatWriteMessage(this); return false;">
+            <input type="text" placeholder="내용을 입력해주세요." name="content">
+            <input type="submit" value="작성">
+        </form>
+        <li class="chat__message-ul"></li>
+    </div>
+</div>
+</body>
+</html>
