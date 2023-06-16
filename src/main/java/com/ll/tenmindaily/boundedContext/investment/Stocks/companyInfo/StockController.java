@@ -78,6 +78,11 @@ public class StockController {
 
             RsData<Integer> result = stockService.saveStockCompanyData(symbol, companyInfo, targetInfo, annInfo);
 
+            //주식 티커가 존재 하지 않는경우 0
+            if (companyInfo==null){
+                return ResponseEntity.ok(0);
+            }
+
             if (result.getData() == 1) {
                 return ResponseEntity.ok(result.getData());
             } else if (result.getData() == 2) {

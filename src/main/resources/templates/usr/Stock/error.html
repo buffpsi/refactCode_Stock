@@ -1,1 +1,31 @@
-<h1> 해당 주식을 찾을 수 없습니다.</h1>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/layout.html}">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .message-container {
+            text-align: center;
+            padding: 20px;
+        }
+        .message-text {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .add-link {
+            font-size: 16px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" class="message-container">
+    <p class="message-text">해당 주식은 추가되어 있지 않는 종목입니다.</p>
+
+    <p><a class="add-link" th:href="@{/stocks/add}">원하시는 종목 추가하러 가기</a></p>
+</div>
+</body>
+</html>

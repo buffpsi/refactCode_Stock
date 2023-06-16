@@ -1,15 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/layout.html}">
 <head>
-    <meta charset="UTF-8">
-    <title>Stock Search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Stock Search</h1>
+<div layout:fragment="content" class="d-flex flex-column align-items-center max-w-3xl mx-auto">
+    <h1 class="display-4 text-center my-5">주식의 티커를 입력해주세요</h1>
 
-<form action="/stocks/show" method="get">
-    <input type="text" name="symbol" placeholder="Enter symbol">
-    <button type="submit">Search</button>
-</form>
+    <form class="d-flex justify-content-center" action="/stocks/show" method="get">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="symbol" placeholder="Enter symbol" aria-label="Enter symbol"
+                   aria-describedby="search-button">
+            <button class="btn btn-primary" type="submit" id="search-button">Search</button>
+        </div>
+    </form>
+
+    <div class="d-flex flex-column align-items-center mt-4 max-w-3xl mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">기본 정보</h5>
+                <p class="card-text">
+                    👉 시가총액 :<br>
+                    시가총액은 특정 회사의 주식 시장 가치를 나타내는 지표입니다. 시가총액은 회사의 주식 총 발행량에 현재 주가를 곱한 값으로 계산됩니다.
+                    시가총액이 크다는 것은 해당 회사의 시장에서의 규모가 크다는 것을 의미할 수 있습니다.
+                </p>
+                <p class="card-text">
+                    👉 PER :<br>
+                    PER은 주가 수익 비율로, 주가를 기반으로 한 회사의 수익성을 평가하는 지표입니다. PER은 주가를 기업의 주당 순이익으로 나눈 비율입니다.
+                    일반적으로 PER이 낮을수록 주식이 상대적으로 저평가되었다고 간주되며, PER이 높을수록 주식이 상대적으로 고평가되었다고 간주될 수 있습니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">배당금 정보</h5>
+                <p class="card-text">
+                    👉 배당금 :<br>
+                    주식 투자자가 회사로부터 지급받는 이익 분배금입니다.1년동안 받을 수 있는 배당금가격이 적혀있습니다.<br>
+                    미국주식의 경우 달러로, 한국에서는 원으로 생각해주시면 됩니다.
+                    배당금은 회사의 이익 상황에 따라 변동할 수 있습니다.
+                </p>
+                <p class="card-text">
+                    👉 배당 비율 :<br>
+                    주가의 배당 비율은 연간 배당 수익률을 의미합니다.
+                    이는 배당금을 주가로 나눈 비율로, 투자한 주식으로부터 연간 얼마의 수익을 받을 수 있는지를 나타냅니다.
+                    일반적으로 높은 배당 비율은 주주들에게 더 많은 수익을 제공하는 것으로 간주됩니다.
+                </p>
+                <p class="card-text">
+                    👉 배당권 분리일 :<br>
+                    배당권 분리일은 배당금을 받기 위해 해당 주식을 분리일 이전에 보유하고 있어야 함을 의미합니다.
+                    배당권 분리일 이후에는 주식을 취득하더라도 해당 배당에 대한 권리를 얻을 수 없습니다.
+                    따라서, 배당을 받고자 하는 경우, 분리일 이전에 해당 주식을 보유하고 있어야 합니다.
+                </p>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">차트적 의미</h5>
+                <p class="card-text">
+                    👉 52주 최저가 :<br>
+                    52주 최저가는 해당 주식이 최근 1년 동안의 가장 낮은 가격을 나타냅니다.
+                    주식이 52주 최저가에 가까워질수록 저점에서 매수하기에 좋은 기회로 여겨질 수 있습니다.
+                    일반적으로 주식이 52주 최저가에 접근할 때마다 많은 투자자들이 매수 신호로 판단하고 주식의 상승 가능성을 예상할 수 있습니다.
+                </p>
+                <p class="card-text">
+                    👉 52주 최고가 :<br>
+                    52주 최고가는 해당 주식이 최근 1년 동안의 가장 높은 가격을 나타냅니다.
+                    주식이 52주 최고가에 가까워질수록 고점에서 매도하기에 좋은 기회로 여겨질 수 있습니다.
+                    주식이 52주 최고가에 도달하면 가격이 과열되었거나 상승 가능성이 제한될 수 있으므로 주의가 필요합니다.
+                </p>
+                <p class="card-text">
+                    👉 52주 평균가 :<br>
+                    52주 평균가는 최근 1년 동안의 주가 평균을 나타냅니다.
+                    주식이 현재 가격보다 52주 평균가에 가까워질수록 주식의 상대적인 가격이 낮은 편에 위치하게 됩니다.
+                    따라서, 주식의 가격이 52주 평균가에 근접하면 매수 신호로 간주할 수 있습니다.
+                    반대로, 가격이 52주 평균가보다 높게 유지되는 경우 매도 신호로 간주할 수 있습니다.
+                </p>
+                <p class="card-text">
+                    👉 최근 12개월 매출액 대비 주가 비율:<br>
+                    최근 12개월 매출액 대비 주가 비율은 주식의 가격을 회사의 매출액과 비교하여 분석하는 지표입니다.
+                    주가가 매출액 대비 비교적 저렴한 경우에는 가치 투자 기회로 여겨질 수 있습니다.
+                    반대로, 주가가 매출액 대비 과도하게 높은 경우에는 가치가 고평가되었을 수 있으며,
+                    매도할 수 있는 신호로 간주될 수 있습니다.
+                </p>
+                <p class="card-text">
+                    👉 200일 이동 평균주가 :<br>
+                    200일 이동 평균주가는 최근 200일 동안의 주가 평균을 나타냅니다.
+                    주가가 200일 이동 평균선 위에 있는 경우에는 상승 추세를 나타낼 수 있으며, 매수 신호로 간주할 수 있습니다.
+                    반대로, 주가가 200일 이동 평균선 아래에 있는 경우에는 하락 추세를 나타낼 수 있으며, 매도 신호로 간주될 수 있습니다.
+                </p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <p class="card-text font-weight-bold text-danger">
+        ⚠️ 주의: 위의 정보들은 주식 투자 시 가치와 가격을 판단하고 비교하는 데 도움을 줍니다. 그러나 투자 결정은 다양한 요소를 종합적으로 고려해야 하며, 단일 지표만을 근거로 판단하는 것은 권장되지 않습니다.
+    </p>
+</div>
+
+<!-- Add Bootstrap JS scripts here -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

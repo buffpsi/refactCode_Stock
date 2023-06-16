@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/layout.html}">
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock News - ${symbol}</title>
+
     <style>
         .news-item {
             margin-bottom: 20px;
@@ -22,17 +25,25 @@
             margin-top: 5px;
             color: #777;
         }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-<h1>Stock News ${stock.symbol}</h1>
-<div th:each="newsItem : ${newsItems}">
-    <div class="news-item">
-        <p class="press-name" th:text="${newsItem.pressName}"></p>
-        <h3 class="news-title">
-            <a th:href="${newsItem.url}" target="_blank" th:text="${newsItem.newsTitle}"></a>
-        </h3>
-        <p class="description" th:text="${newsItem.description}"></p>
+<div layout:fragment="content" class="d-flex flex-column align-items-center max-w-3xl mx-auto">
+    <div class="mt-1"></div> <!-- 간격 추가 -->
+    <div th:each="newsItem : ${newsItems}">
+        <div class="card news-item">
+            <div class="card-body">
+                <h5 class="card-title press-name" th:text="${newsItem.pressName}"></h5>
+                <h3 class="card-title news-title">
+                    <a th:href="${newsItem.url}" target="_blank" th:text="${newsItem.newsTitle}"></a>
+                </h3>
+                <p class="card-text description" th:text="${newsItem.description}"></p>
+            </div>
+        </div>
     </div>
 </div>
 </body>

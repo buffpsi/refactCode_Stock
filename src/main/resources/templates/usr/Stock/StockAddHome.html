@@ -1,13 +1,117 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org/"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{usr/layout/layout.html}">-->
+<!--<head>-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+
+<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+<!--    <title>Stock Data</title>-->
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--    <script>-->
+<!--        function addStock(exchange) {-->
+<!--            console.log('addStock 함수 호출됨'); // 추가된 코드-->
+
+
+<!--            var symbol = $('#symbolInput').val();-->
+
+<!--            console.log('symbol:', symbol); // 추가된 코드-->
+
+<!--            // 심볼이 입력되었을 때만 처리-->
+<!--            if (symbol !== '') {-->
+<!--                // 심볼에 거래소 정보를 붙여줌-->
+<!--                symbol += exchange;-->
+
+<!--                var csrfToken = $("meta[name='_csrf']").attr("content");-->
+<!--                var csrfHeader = $("meta[name='_csrf_header']").attr("content");-->
+<!--                var headers = {};-->
+<!--                headers[csrfHeader] = csrfToken;-->
+
+<!--                $.ajax({-->
+<!--                    type: 'POST',-->
+<!--                    url: '/stocks/add/' + symbol,-->
+<!--                    headers: headers,-->
+<!--                    success: function (response) {-->
+<!--                        if (response === 2) {-->
+<!--                            alert('이미 추가된 종목입니다.');-->
+<!--                        } else if (response === 1) {-->
+<!--                            alert('종목이 추가되었습니다.');-->
+<!--                            showStockList(); // Stock 추가 후 목록을 다시 보여줌-->
+<!--                        } else {-->
+<!--                            alert('존재하지 않는 티커입니다');-->
+<!--                        }-->
+<!--                    },-->
+<!--                    error: function (xhr, status, error) {-->
+<!--                        alert('서버 요청 중에 오류가 발생했습니다.');-->
+<!--                    }-->
+<!--                });-->
+<!--            } else {-->
+<!--                alert('종목을 입력하세요.');-->
+<!--            }-->
+<!--        }-->
+
+<!--        function showStockList() {-->
+<!--            $.ajax({-->
+<!--                type: 'GET',-->
+<!--                url: '/stocks/list',-->
+<!--                success: function (response) {-->
+<!--                    var stockList = $('#stockList');-->
+<!--                    stockList.empty();-->
+<!--                    response.forEach(function (stock) {-->
+<!--                        var symbol = stock.symbol;-->
+<!--                        var stockInfoUrl = '/stocks/show?symbol=' + symbol;  // 수정된 부분-->
+
+<!--                        var stockItem = $('<p></p>')-->
+<!--                            .text(symbol)-->
+<!--                            .css('cursor', 'pointer')-->
+<!--                            .click(function () {-->
+<!--                                window.location.href = stockInfoUrl;-->
+<!--                            });-->
+
+<!--                        stockList.append(stockItem);-->
+<!--                    });-->
+<!--                },-->
+<!--                error: function (xhr, status, error) {-->
+<!--                    alert('Stock 목록을 가져오는데 실패했습니다.');-->
+<!--                }-->
+<!--            });-->
+<!--        }-->
+
+<!--        $(document).ready(function () {-->
+<!--            showStockList(); // 페이지 로드 시 Stock 목록을 보여줌-->
+<!--        });-->
+<!--    </script>-->
+<!--</head>-->
+<!--<div layout:fragment="content" class="d-flex flex-column align-items-center max-w-3xl mx-auto">-->
+<!--    <body>-->
+<!--    <h1>Stock Data</h1>-->
+<!--    <input type="text" id="symbolInput" placeholder="종목을 입력하세요">-->
+<!--    <button onclick="addStock('')">미국 추가</button>-->
+<!--    <button onclick="addStock('.ks')">코스피 추가</button>-->
+<!--    <button onclick="addStock('.kq')">코스닥 추가</button>-->
+<!--    <div id="stockList"></div>-->
+<!--    </body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/layout.html}">
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Stock Data</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function addStock(exchange) {
+            console.log('addStock 함수 호출됨'); // 추가된 코드
+
             var symbol = $('#symbolInput').val();
+
+            console.log('symbol:', symbol); // 추가된 코드
 
             // 심볼이 입력되었을 때만 처리
             if (symbol !== '') {
@@ -30,13 +134,15 @@
                             alert('종목이 추가되었습니다.');
                             showStockList(); // Stock 추가 후 목록을 다시 보여줌
                         } else {
-                            alert('종목 추가에 실패했습니다.');
+                            alert('존재하지 않는 티커입니다');
                         }
                     },
                     error: function (xhr, status, error) {
-                        alert('존재하지 않는 티커입니다.');
+                        alert('서버 요청 중에 오류가 발생했습니다.');
                     }
                 });
+            } else {
+                alert('종목을 입력하세요.');
             }
         }
 
@@ -71,13 +177,35 @@
             showStockList(); // 페이지 로드 시 Stock 목록을 보여줌
         });
     </script>
+    <style>
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        .input-group input {
+            flex-grow: 1;
+        }
+
+        .input-group button {
+            margin-left: 10px;
+        }
+
+        .stock-item {
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
-<h1>Stock Data</h1>
-<input type="text" id="symbolInput" placeholder="종목을 입력하세요">
-<button onclick="addStock('')">미국 추가</button>
-<button onclick="addStock('.ks')">코스피 추가</button>
-<button onclick="addStock('.kq')">코스닥 추가</button>
-<div id="stockList"></div>
-</body>
+<div layout:fragment="content" class="d-flex flex-column align-items-center max-w-3xl mx-auto">
+    <body>
+    <h1>Stock Data</h1>
+    <div class="input-group">
+        <input type="text" id="symbolInput" placeholder="종목을 입력하세요" class="form-control">
+        <div class="input-group-append">
+            <button onclick="addStock('')" class="btn btn-primary">미국 추가</button>
+            <button onclick="addStock('.ks')" class="btn btn-primary">코스피 추가</button>
+            <button onclick="addStock('.kq')" class="btn btn-primary">코스닥 추가</button>
+        </div>
+    </div>
+    <div id="stockList"></div>
+    </body>
 </html>
