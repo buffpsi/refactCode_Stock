@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{usr/layout/layout.html}">
+<html th:lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{usr/layout/layout.html}">
 
-<div layout:fragment="content" class="flex-grow flex items-center justify-center">
-    <div class="max-w-2xl w-full px-4">
-        <h1>메인페이지 입니다.</h1>
-        <h1>여기에 콘텐츠가 들어갑니다.</h1>
+<head>
+    <meta charset="UTF-8">
+    <title>10minDaily</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main_style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main_mobile.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&family=Noto+Sans+KR:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <div layout:fragment="content" class="flex-grow flex items-center justify-center">
+        <div class="intro_section1">
+            <div class="main_title">
+                월급이 스쳐가는,<br/>
+                모두의 통장을 위해
+            </div>
+            <div class="sub_title">Development by Sixteens</div>
+            <div class="copyright">Copyright(c) 2023 Sixteens. All rights reserved</div>
+            <div class="site_title">TECH!T BY LIKELION ACADEMY</div>
+        </div>
+        <div class="intro_section2">
+            <video autoplay th:src="@{/images/Title_coin.mp4}" loop muted type="mp4"></video>
+            <div class="video_deco1">Investment</div>
+            <div class="video_deco2">
+                Stock<br/>
+                Coin
+            </div>
+        </div>
+        <div class="intro_section3">
+            <div class="sub_title">Developer Coment</div>
+            <div class="section_desc">
+                하루 10분,<br/>
+                당신의 더 빛나는 미래를 응원합니다.</div>
+            <div class="contact_summary">
+                <div class="cs_item">
+                    Gil-Tae Na<br/>
+                    nagt1997@gmail.com
+                </div>
+                <div class="cs_item">
+                    Jae-An Shin<br/>
+                    jaeanshin0523@gmail.com
+                </div>
+                <div class="cs_item">
+                    Jin-Seong Kim<br/>
+                    rlawlstjd45623@gmail.com
+                </div>
+                <div class="cs_item">
+                    Eun-Ji Kim<br/>
+                    dmswldms12@gmail.com
+                </div>
+            </div>
+            <div class="contact_form">
+                <input type="text" placeholder="Your Email Address"/>
+                <textarea id="message_text" placeholder="Your Message"></textarea>
+                <span class="submit_bt">Send Email</span>
+            </div>
+            <div class="contact_deco">
+                Contact
+            </div>
+            <div class="contact_desc">
+                문의사항 및 수정요청사항이 있다면<br/>
+                위의 서식을 참고하셔서 연락 부탁드립니다.
+            </div>
+            <div class="top_bt">Move to Top</div>
+        </div>
+        <div class="sns_section">
+            <span class="sns_deco"></span>
+            <ul>
+                <li><a href="https://github.com/LL-10mindaily/10mindaily">github</a></li>
+                <a href="https://github.com/LL-10mindaily/10mindaily"><img th:src="@{/images/github_icon.svg}"/></a>
+                <li><a href="https://www.notion.so/10min-daily-1432aee697a749529bf78e17bdcd1e4f">notion</a></li>
+                <a href="https://www.notion.so/10min-daily-1432aee697a749529bf78e17bdcd1e4f"><img th:src="@{/images/notion_icon.svg}"/></a>
+            </ul>
+        </div>
     </div>
-
-</div>
+    </header>
+</body>
+</html>
