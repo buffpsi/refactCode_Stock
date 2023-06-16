@@ -1,0 +1,79 @@
+<html th:lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+    <header th:fragment="header">
+        <div class="main_menu">
+            <div class="menu_section">
+                <div class="filter_item">주식
+                    <i class="fi fi-rr-angle-small-down"></i>
+                    <ul class="select_box">
+                        <li class="active"><a>주식이란?</a></li>
+                        <li><a>국내주식</a></li>
+                        <li><a>해외주식</a></li>
+                        <li><a>관련뉴스</a></li>
+                    </ul>
+                </div>
+                <div class="filter_item">코인
+                    <i class="fi fi-rr-angle-small-down"></i>
+                    <ul class="select_box">
+                        <li><a>코인이란?</a></li>
+                        <li><a>관련뉴스</a></li>
+                        <li><a>코인사이트</a></li>
+                    </ul>
+                </div>
+                <div class="filter_item">게시판
+                    <i class="fi fi-rr-angle-small-down"></i>
+                    <ul class="select_box">
+                        <li><a th:href="@{/question/list}">전체</a></li>
+                        <li><a th:href="@{/question/stock/list}">주식</a></li>
+                        <li><a th:href="@{/question/coin/list}">코인</a></li>
+                    </ul>
+                </div>
+                <div class="filter_item"><a>채팅방</a>
+                    <i class= "fi fi-sr-users-alt"></i>
+                </div>
+            </div>
+            <div class="logo">
+                <img th:src="@{/images/10minDaily1.svg}"/>
+            </div>
+            <div class="login_menu">
+                <ul>
+                    <li><a th:href="@{/question/coin/list}" class="text signup-link">로그인/회원가입</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mobile_menu mobile_view">
+            <div class="mobile_menu_section">
+                <div class="mobile_menu_item">재테크
+                    <i class="fi fi-rr-angle-small-down"></i>
+                    <ul class="mobile_select_box">
+                        <li>주식</li>
+                        <li>코인</li>
+                    </ul>
+                </div>
+                <div class="mobile_menu_item">커뮤니티
+                    <i class="fi fi-rr-angle-small-down"></i>
+                    <ul class="mobile_select_box">
+                        <li><a th:href="@{/question/list}">전체게시판</a></li>
+                        <li><a th:href="@{/question/stock/list}">주식게시판</a></li>
+                        <li><a th:href="@{/question/coin/list}">코인게시판</a></li>
+                        <li><a>채팅방</a></li>
+                    </ul>
+                </div>
+                <div class="mobile_menu_item">
+                    <div class="mobile_sidebar">
+                        <i class="fi fi-sr-menu-burger"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile_menu_main">
+                <div class="mobile_main">
+                    <li><<a href="/usr/member/login" class="text signup-link">>로그인/회원가입</a></li>
+                    <li><a href="#">공지사항</a></li>
+                    <li><a href="#">서비스소개</a></li>
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
+</html>
