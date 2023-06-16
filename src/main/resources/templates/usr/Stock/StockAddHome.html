@@ -7,7 +7,12 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function addStock(exchange) {
+            console.log('addStock 함수 호출됨'); // 추가된 코드
+
+
             var symbol = $('#symbolInput').val();
+
+            console.log('symbol:', symbol); // 추가된 코드
 
             // 심볼이 입력되었을 때만 처리
             if (symbol !== '') {
@@ -30,13 +35,15 @@
                             alert('종목이 추가되었습니다.');
                             showStockList(); // Stock 추가 후 목록을 다시 보여줌
                         } else {
-                            alert('종목 추가에 실패했습니다.');
+                            alert('존재하지 않는 티커입니다');
                         }
                     },
                     error: function (xhr, status, error) {
-                        alert('존재하지 않는 티커입니다.');
+                        alert('서버 요청 중에 오류가 발생했습니다.');
                     }
                 });
+            } else {
+                alert('종목을 입력하세요.');
             }
         }
 
