@@ -9,172 +9,172 @@
     <title>회원가입</title>
 </head>
 <body>
-    <div class="container">
-        <div class="forms">
-            <div class="form signup">
-                <span class="title">회원가입</span>
-                <form th:action="@{/usr/member/join}" method="POST" onsubmit="JoinForm__submit(this); return false;">
-                    <div class="column">
-                        <div class="input-field">
-                            <input id="username" name="username" type="text" placeholder="이름" required>
-                            <i class="uil uil-smile"></i>
-                        </div>
-                        <div class="input-field">
-                            <input id="nickname" name="nickname" type="text" placeholder="닉네임" required>
-                            <i class="uil uil-grin"></i>
-                        </div>
+<div class="container">
+    <div class="forms">
+        <div class="form signup">
+            <span class="title">회원가입</span>
+            <form th:action="@{/usr/member/join}" method="POST" onsubmit="JoinForm__submit(this); return false;">
+                <div class="column">
+                    <div class="input-field">
+                        <input id="username" name="username" type="text" placeholder="이름" required>
+                        <i class="uil uil-smile"></i>
                     </div>
                     <div class="input-field">
-                        <input id="id" name="id" type="text" placeholder="아이디" required>
-                        <i class="uil uil-user"></i>
+                        <input id="nickname" name="nickname" type="text" placeholder="닉네임" required>
+                        <i class="uil uil-grin"></i>
                     </div>
-                    <div class="input-field">
-                        <input id="email" name="email" type="email" class="email" placeholder="이메일" required>
-                        <i class="uil uil-envelope"></i>
+                </div>
+                <div class="input-field">
+                    <input id="id" name="id" type="text" placeholder="아이디" required>
+                    <i class="uil uil-user"></i>
+                </div>
+                <div class="input-field">
+                    <input id="email" name="email" type="email" class="email" placeholder="이메일" required>
+                    <i class="uil uil-envelope"></i>
+                </div>
+                <div class="input-field">
+                    <input id="password" name="password" type="password" class="password" placeholder="비밀번호" required>
+                    <i class="uil uil-unlock-alt"></i>
+                </div>
+                <div class="input-field">
+                    <input id="password_check" name="password_check" type="password" class="password" placeholder="비밀번호 확인" required>
+                    <i class="uil uil-lock-alt"></i>
+                    <i class="uil uil-eye-slash showHidePw"></i>
+                </div>
+                <div class="interest_select">
+                    <select id="interest1" name="interest1">
+                        <option value="">관심 재테크 1</option>
+                        <option value="stocks">주식</option>
+                        <option value="cryptocurrency">코인</option>
+                        <option value="realEstate">부동산</option>
+                        <option value="musicInvestment">뮤직테크</option>
+                        <option value="artInvestment">아트테크</option>
+                        <option value="resellInvestment">리셀테크</option>
+                        <option value="hobbyInvestment">취미테크</option>
+                        <option value="appInvestment">앱테크</option>
+                        <option value="snsInvestment">SNS테크</option>
+                    </select>
+                    <select id="interest2" name="interest2">
+                        <option value="">관심 재테크 2</option>
+                        <option value="stocks">주식</option>
+                        <option value="cryptocurrency">코인</option>
+                        <option value="realEstate">부동산</option>
+                        <option value="musicInvestment">뮤직테크</option>
+                        <option value="artInvestment">아트테크</option>
+                        <option value="resellInvestment">리셀테크</option>
+                        <option value="hobbyInvestment">취미테크</option>
+                        <option value="appInvestment">앱테크</option>
+                        <option value="snsInvestment">SNS테크</option>
+                    </select>
+                </div>
+                <div class="checkbox-text">
+                    <div class="checkbox-content">
+                        <input type="checkbox" id="personalInfoAgreement" name="personalInfoAgreement">
+                        <label for="personalInfoAgreement">개인정보 수집 및 활용에 동의합니다.</label>
                     </div>
-                    <div class="input-field">
-                        <input id="password" name="password" type="password" class="password" placeholder="비밀번호" required>
-                        <i class="uil uil-unlock-alt"></i>
-                    </div>
-                    <div class="input-field">
-                        <input id="password_check" name="password_check" type="password" class="password" placeholder="비밀번호 확인" required>
-                        <i class="uil uil-lock-alt"></i>
-                        <i class="uil uil-eye-slash showHidePw"></i>
-                    </div>
-                    <div class="interest_select">
-                        <select id="interest1" name="interest1">
-                            <option value="">관심 재테크 1</option>
-                            <option value="stocks">주식</option>
-                            <option value="cryptocurrency">코인</option>
-                            <option value="realEstate">부동산</option>
-                            <option value="musicInvestment">뮤직테크</option>
-                            <option value="artInvestment">아트테크</option>
-                            <option value="resellInvestment">리셀테크</option>
-                            <option value="hobbyInvestment">취미테크</option>
-                            <option value="appInvestment">앱테크</option>
-                            <option value="snsInvestment">SNS테크</option>
-                        </select>
-                        <select id="interest2" name="interest2">
-                            <option value="">관심 재테크 2</option>
-                            <option value="stocks">주식</option>
-                            <option value="cryptocurrency">코인</option>
-                            <option value="realEstate">부동산</option>
-                            <option value="musicInvestment">뮤직테크</option>
-                            <option value="artInvestment">아트테크</option>
-                            <option value="resellInvestment">리셀테크</option>
-                            <option value="hobbyInvestment">취미테크</option>
-                            <option value="appInvestment">앱테크</option>
-                            <option value="snsInvestment">SNS테크</option>
-                        </select>
-                    </div>
-                    <div class="checkbox-text">
-                        <div class="checkbox-content">
-                            <input type="checkbox" id="personalInfoAgreement" name="personalInfoAgreement">
-                            <label for="personalInfoAgreement">개인정보 수집 및 활용에 동의합니다.</label>
-                        </div>
-                    </div>
-                    <div class="input-field button">
-                        <input type="button" value="Signup">
-                    </div>
-                </form>
-                <div class="login-signup">
+                </div>
+                <div class="input-field button">
+                    <input type="button" value="Signup">
+                </div>
+            </form>
+            <div class="login-signup">
                     <span class="text">이미 계정이 있으신가요?
                         <a th:href="@{/usr/member/login}" class="text signup-link">로그인</a>
                     </span>
-                </div>
             </div>
         </div>
     </div>
-    <script th:src="@{js/script.js}"></script>
-    <script>
-        function JoinForm__submit(form) {
-            form.username.value = form.username.value.trim();
+</div>
+<script th:src="@{js/script.js}"></script>
+<script>
+    function JoinForm__submit(form) {
+        form.username.value = form.username.value.trim();
 
-            if (form.username.value.length === 0) {
-                alert('이름을 입력해주세요.');
-                form.username.focus();
-                return;
-            }
-
-            form.id.value = form.id.value.trim();
-
-            if (form.id.value.length === 0) {
-                alert('아이디를 입력해주세요.');
-                form.id.focus();
-                return;
-            }
-
-            if (form.id.value.length < 4) {
-                alert('아이디를 4자 이상 입력해주세요.');
-                form.id.focus();
-                return;
-            }
-
-            form.password.value = form.password.value.trim();
-
-            if (form.password.value.length === 0) {
-                alert('비밀번호를 입력해주세요.');
-                form.password.focus();
-                return;
-            }
-
-            if (form.password.value.length < 4) {
-                alert('비밀번호를 4자 이상 입력해주세요.');
-                form.password.focus();
-                return;
-            }
-
-            if (form.password_check.value !== form.password.value) {
-                alert('비밀번호를 확인해주세요.');
-                form.password_check.value = '';
-                form.password_check.focus();
-                return;
-            }
-
-            form.nickname.value = form.nickname.value.trim();
-
-            if (form.nickname.value.length === 0) {
-                alert('닉네임을 입력해주세요.');
-                form.nickname.focus();
-                return;
-            }
-
-            form.email.value = form.email.value.trim();
-
-            if (form.email.value.length === 0) {
-                alert('이메일을 입력해주세요.');
-                form.email.focus();
-                return;
-            } else if (!validateEmail(form.email.value)) {
-                alert('올바른 형식의 이메일 주소를 입력해주세요.');
-                form.email.focus();
-                return;
-            }
-
-            if (form.interest1.value === '') {
-                alert('관심사를 선택해주세요.');
-                form.interest1.focus();
-                return;
-            } else if (form.interest2.value === '') {
-                alert('관심사를 선택해주세요.');
-                form.interest2.focus();
-                return;
-            }
-
-            if (!form.personalInfoAgreement.checked) {
-                alert('개인정보 수집 및 활용 약관에 동의해주세요.')
-                form.personalInfoAgreement.focus();
-                return;
-            }
-
-            function validateEmail(email) {
-                var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-                return emailPattern.test(email);
-            }
-
-            form.submit();
+        if (form.username.value.length === 0) {
+            alert('이름을 입력해주세요.');
+            form.username.focus();
+            return;
         }
-    </script>
+
+        form.id.value = form.id.value.trim();
+
+        if (form.id.value.length === 0) {
+            alert('아이디를 입력해주세요.');
+            form.id.focus();
+            return;
+        }
+
+        if (form.id.value.length < 4) {
+            alert('아이디를 4자 이상 입력해주세요.');
+            form.id.focus();
+            return;
+        }
+
+        form.password.value = form.password.value.trim();
+
+        if (form.password.value.length === 0) {
+            alert('비밀번호를 입력해주세요.');
+            form.password.focus();
+            return;
+        }
+
+        if (form.password.value.length < 4) {
+            alert('비밀번호를 4자 이상 입력해주세요.');
+            form.password.focus();
+            return;
+        }
+
+        if (form.password_check.value !== form.password.value) {
+            alert('비밀번호를 확인해주세요.');
+            form.password_check.value = '';
+            form.password_check.focus();
+            return;
+        }
+
+        form.nickname.value = form.nickname.value.trim();
+
+        if (form.nickname.value.length === 0) {
+            alert('닉네임을 입력해주세요.');
+            form.nickname.focus();
+            return;
+        }
+
+        form.email.value = form.email.value.trim();
+
+        if (form.email.value.length === 0) {
+            alert('이메일을 입력해주세요.');
+            form.email.focus();
+            return;
+        } else if (!validateEmail(form.email.value)) {
+            alert('올바른 형식의 이메일 주소를 입력해주세요.');
+            form.email.focus();
+            return;
+        }
+
+        if (form.interest1.value === '') {
+            alert('관심사를 선택해주세요.');
+            form.interest1.focus();
+            return;
+        } else if (form.interest2.value === '') {
+            alert('관심사를 선택해주세요.');
+            form.interest2.focus();
+            return;
+        }
+
+        if (!form.personalInfoAgreement.checked) {
+            alert('개인정보 수집 및 활용 약관에 동의해주세요.')
+            form.personalInfoAgreement.focus();
+            return;
+        }
+
+        function validateEmail(email) {
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            return emailPattern.test(email);
+        }
+
+        form.submit();
+    }
+</script>
 </body>
 </html>
