@@ -2,8 +2,6 @@ package com.ll.tenmindaily.boundedContext.member.controller;
 
 import com.ll.tenmindaily.base.rq.Rq;
 import com.ll.tenmindaily.base.rsData.RsData;
-import com.ll.tenmindaily.boundedContext.emailVerification.Entity.EmailVerification;
-import com.ll.tenmindaily.boundedContext.emailVerification.service.EmailVerificationService;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import com.ll.tenmindaily.boundedContext.member.service.MemberService;
 import jakarta.validation.Valid;
@@ -21,15 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
-
 @Controller
 @RequestMapping("/usr/member")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
-
-    private final EmailVerificationService emailVerificationService;
 
     private final Rq rq;
 
@@ -67,9 +61,9 @@ public class MemberController {
     public String join(@Valid JoinForm joinForm) {
         RsData<Member> joinRs = memberService.join(joinForm);
         if (joinRs.isFail()) {
-            return "redirect:/usr/member/join";
+            return rq.historyBack(joinRs.getMsg());
         }
-        return "redirect:/usr/member/login";
+        return rq.redirectWithMsg("/usr/member/login", joinRs.getMsg());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -104,9 +98,9 @@ public class MemberController {
     public String editMyPage(JoinForm joinForm) {
         Member actor = rq.getMember();
 
-        RsData<Member> modifyRsData = memberService.modify(actor, joinForm);
+        RsData modifyRsData = memberService.modify(actor, joinForm);
 
-        return "redirect:/usr/member/myPage";
+        return rq.redirectWithMsg("/usr/member/myPage", modifyRsData);
     }
 
     @PreAuthorize("isAnonymous()")
@@ -123,42 +117,36 @@ public class MemberController {
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/findUserId")
-    public String findUserId(String email, RedirectAttributes redirectAttributes) {
+    public String findUserId(String email) {
         Member actor = memberService.findByEmail(email).orElse(null);
 
         if (actor == null) {
-            return "redirect:/usr/member/findUserId";
+            return rq.historyBack(RsData.of("F-1", "해당 이메일로 가입된 계정이 존재하지 않습니다."));
         }
 
         String foundedUserId = actor.getUserId();
         String successMsg = "해당 이메일로 가입한 계정의 아이디는 '%s' 입니다.".formatted(foundedUserId);
-        //TODO: 사용자에게 성공 메시지 보여주기
 
-        return "redirect:/usr/member/login?userId=%s".formatted(foundedUserId);
+        return rq.redirectWithMsg("/usr/member/login?userId=%s".formatted(foundedUserId), RsData.of("S-1", successMsg));
     }
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/findPassword")
-    public String findPassword(String userId, String email, RedirectAttributes redirectAttributes) {
+    public String findPassword(String userId, String email) {
         Member member = memberService.findByUserIdAndEmail(userId, email).orElse(null);
 
         if (member == null) {
-            String userNotFoundMsg = "일치하는 회원이 존재하지 않습니다.";
-            redirectAttributes.addFlashAttribute("message", userNotFoundMsg);
-            return "redirect:/usr/member/findPassword";
+            RsData userNotFoundRsData = RsData.of("F-1", "일치하는 회원이 존재하지 않습니다.");
+            return rq.redirectWithMsg("/usr/member/findPassword", userNotFoundRsData);
         }
 
         RsData sendTempLoginPwToEmailResultData = memberService.sendTempPasswordToEmail(member);
 
         if (sendTempLoginPwToEmailResultData.isFail()) {
-            String errorMsg = sendTempLoginPwToEmailResultData.getMsg();
-            redirectAttributes.addFlashAttribute("message", errorMsg);
-            return "redirect:/usr/member/findPassword";
+            return rq.redirectWithMsg("/usr/member/findPassword", sendTempLoginPwToEmailResultData);
         }
 
-        String successMsg = sendTempLoginPwToEmailResultData.getMsg();
-        redirectAttributes.addFlashAttribute("message", successMsg);
-        return "redirect:/usr/member/login";
+        return rq.redirectWithMsg("/usr/member/login", sendTempLoginPwToEmailResultData);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -174,17 +162,17 @@ public class MemberController {
         RsData modifyRsData = memberService.modifyPassword(actor, password, oldPassword);
         redirectAttributes.addFlashAttribute("message", modifyRsData.getMsg());
         if (modifyRsData.isFail()) {
-            return "redirect:/usr/member/modifyPassword";
+            return rq.redirectWithMsg("/usr/member/modifyPassword", modifyRsData);
         }
-        return "redirect:/";
+        return rq.redirectWithMsg("/", modifyRsData);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/withdrawal")
     public String withdrawal() {
         Member actor = rq.getMember();
-        memberService.deleteMember(actor);
-        return "redirect:/usr/member/login?logout";
+        RsData deleteRsData = memberService.deleteMember(actor);
+        return rq.redirectWithMsg("/usr/member/login?logout", deleteRsData);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -200,11 +188,10 @@ public class MemberController {
         String actorEmail = actor.getEmail();
 
         if (!actorEmail.equals(email)) {
-            RsData.of("F-1", "기존 회원정보와 다른 이메일 주소입니다. 회원정보를 변경하거나, 기존 이메일 주소로 이메일 인증을 진행해주세요.");
-            return "redirect:/usr/member/myPage";
+            return rq.redirectWithMsg("/usr/member/myPage", RsData.of("F-1", "기존 회원정보와 다른 이메일 주소입니다. 회원정보를 변경하거나, 기존 이메일 주소로 이메일 인증을 진행해주세요."));
         }
 
         RsData verificationRsData = memberService.sendVerificationMail(actor, email);
-        return "redirect:/usr/member/myPage";
+        return rq.redirectWithMsg("/usr/member/myPage", verificationRsData);
     }
 }

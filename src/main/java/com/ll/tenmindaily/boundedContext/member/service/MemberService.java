@@ -127,7 +127,7 @@ public class MemberService {
         actor.setNickname(joinForm.getNickname());
         actor.setEmail(joinForm.getEmail());
 
-        return RsData.of("S-1","성공적으로 수정되었습니다.", memberRepository.save(actor));
+        return RsData.of("S-1", "성공적으로 수정되었습니다.", memberRepository.save(actor));
     }
 
     @Transactional
@@ -178,7 +178,7 @@ public class MemberService {
 
     public RsData sendVerificationMail(Member actor, String email) {
         emailVerificationService.send(actor, email);
-        return RsData.of("S-1", "인증 메일을 성공적으로 '%s' 주소로 전송했습니다.");
+        return RsData.of("S-1", "인증 메일을 성공적으로 `%s` 주소로 전송했습니다.".formatted(email));
     }
 
     @Transactional

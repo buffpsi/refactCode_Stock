@@ -5,7 +5,6 @@ import com.ll.tenmindaily.boundedContext.investment.Stocks.AmericaData.AmericaSt
 import com.ll.tenmindaily.boundedContext.investment.Stocks.KoreaData.KoreaStockCrawlingData;
 import com.ll.tenmindaily.boundedContext.investment.Stocks.KoreaData.KoreaStockCrawlingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class StockScheduler {
         this.stockService = stockService;
     }
 
-//    @Scheduled(fixedDelay = 1000000) // 1000초마다 실행
+    //    @Scheduled(fixedDelay = 1000000) // 1000초마다 실행
     public void updateStockData() throws IOException {
 
         // 미국 주식 데이터 가져오기

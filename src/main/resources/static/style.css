@@ -3,9 +3,11 @@ html {
     min-height: 100%;
     margin: 0;
 }
+
 body {
     min-height: 100%;
 }
+
 .footer {
     position: absolute;
     left: 0;
@@ -15,14 +17,15 @@ body {
     padding: 15px 0;
     text-align: center;
 }
-.content{
-    margin-bottom:100px;
+
+.content {
+    margin-bottom: 100px;
     margin-top: 50px;
     margin-left: 200px;
     margin-right: 200px;
 }
 
 .comment {
-    border-top:dotted 1px #ddd;
-    font-size:1em;
+    border-top: dotted 1px #ddd;
+    font-size: 1em;
 }

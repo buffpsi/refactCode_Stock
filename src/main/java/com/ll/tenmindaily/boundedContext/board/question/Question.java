@@ -1,7 +1,6 @@
 package com.ll.tenmindaily.boundedContext.board.question;
 
 
-
 import com.ll.tenmindaily.boundedContext.board.answer.Answer;
 import com.ll.tenmindaily.boundedContext.board.category.Category;
 import com.ll.tenmindaily.boundedContext.board.comment.Comment;

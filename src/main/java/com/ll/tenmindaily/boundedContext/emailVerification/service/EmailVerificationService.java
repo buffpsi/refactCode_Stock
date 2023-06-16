@@ -26,7 +26,7 @@ public class EmailVerificationService {
         }
         //TODO: 하드 코딩 제거하기
         String title = "[하루10분 이메일인증] 안녕하세요 %s님. 링크를 클릭하여 이메일 인증을 완료해주세요.".formatted(member.getUsername());
-        String url = genEmailVerificationUrl(member);
+        String url = "<a href=\""+ genEmailVerificationUrl(member) + "\">이메일 인증 링크</a>";
 
         emailService.sendEmail(email, title, url);
     }

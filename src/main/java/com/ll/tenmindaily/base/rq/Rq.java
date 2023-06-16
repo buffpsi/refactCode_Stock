@@ -3,12 +3,10 @@ package com.ll.tenmindaily.base.rq;
 import com.ll.tenmindaily.base.rsData.RsData;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import com.ll.tenmindaily.boundedContext.member.service.MemberService;
-
 import com.ll.tenmindaily.standard.util.Ut;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.Authentication;
@@ -17,8 +15,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
-
 import java.util.Date;
+import java.util.Map;
 
 @Component
 @RequestScope
@@ -110,5 +108,11 @@ public class Rq {
     // 메세지에 ttl 적용
     private String msgWithTtl(String msg) {
         return Ut.url.encode(msg) + ";ttl=" + new Date().getTime();
+    }
+
+    public String getParamsJsonStr() {
+        Map<String, String[]> parameterMap = req.getParameterMap();
+
+        return Ut.json.toStr(parameterMap);
     }
 }

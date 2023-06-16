@@ -4,19 +4,17 @@ import com.ll.tenmindaily.boundedContext.board.answer.Answer;
 import com.ll.tenmindaily.boundedContext.board.answer.AnswerRepository;
 import com.ll.tenmindaily.boundedContext.board.category.Category;
 import com.ll.tenmindaily.boundedContext.board.category.CategoryRepository;
-import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import com.ll.tenmindaily.boundedContext.member.repository.MemberRepository;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class QuestionControllerTest {
@@ -46,23 +44,24 @@ class QuestionControllerTest {
         q2.setCreateDate(LocalDateTime.now());
         this.questionRepository.save(q2);
     }
+
     @Test
-    void testCreateData(){ //테스트 게시물 만들기
+    void testCreateData() { //테스트 게시물 만들기
 
 
-        for(int i=1; i<=10; i++){
+        for (int i = 1; i <= 10; i++) {
             String subject = String.format("주식 데이터입니다.:[%03d]", i);
             String content = "내용";
             this.questionService.create(subject, content, memberRepository.findByUsername("nagt1997").orElse(null), categoryRepository.findByInvestment("stock"));
         }
 
-        for(int i=11; i<=20; i++){
+        for (int i = 11; i <= 20; i++) {
             String subject = String.format("코인 데이터입니다.:[%03d]", i);
             String content = "내용";
             this.questionService.create(subject, content, memberRepository.findByUsername("user1").orElse(null), categoryRepository.findByInvestment("coin"));
         }
 
-        for(int i=21; i<=30; i++){
+        for (int i = 21; i <= 30; i++) {
             String subject = String.format("부동산 데이터입니다.:[%03d]", i);
             String content = "내용";
             this.questionService.create(subject, content, memberRepository.findByUsername("user2").orElse(null), categoryRepository.findByInvestment("realestate"));
@@ -71,7 +70,7 @@ class QuestionControllerTest {
     }
 
     @Test
-    void createCategory(){ //테스트 카테고리 만들기
+    void createCategory() { //테스트 카테고리 만들기
         Category c1 = new Category();
         c1.setId(1);
         c1.setInvestment("stock");
@@ -87,7 +86,7 @@ class QuestionControllerTest {
     @Test
     void testFindById() {
         Optional<Question> oq = this.questionRepository.findById(1);
-        if(oq.isPresent()){//Boolean 타입, Optional 객체가 값을 가진다 true, 없다 false 리턴
+        if (oq.isPresent()) {//Boolean 타입, Optional 객체가 값을 가진다 true, 없다 false 리턴
             Question q = oq.get();
             assertEquals("sbb가 뭐임?", q.getSubject());
         }

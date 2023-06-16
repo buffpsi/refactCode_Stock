@@ -13,10 +13,10 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
 
-    public List<String> getinvestmentType(){ //카테고리 이름들 String 으로 가져오기
-        List<String> catgoryList =new ArrayList<>();
-        List<Category> fCategory =  this.categoryRepository.findAll();
-        for(Category c : fCategory){
+    public List<String> getinvestmentType() { //카테고리 이름들 String 으로 가져오기
+        List<String> catgoryList = new ArrayList<>();
+        List<Category> fCategory = this.categoryRepository.findAll();
+        for (Category c : fCategory) {
             catgoryList.add(c.getInvestment());
         }
         return catgoryList;
@@ -26,7 +26,7 @@ public class CategoryService {
         return this.categoryRepository.findByInvestment(category);
     }
 
-    public List<Category> getAllCategory(){
+    public List<Category> getAllCategory() {
         return categoryRepository.findAll();
     }
 

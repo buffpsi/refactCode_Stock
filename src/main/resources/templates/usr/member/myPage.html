@@ -2,44 +2,48 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{usr/layout/layout.html}">
 <head>
-  <meta charset="UTF-8" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>myPage</title>
+    <meta charset="UTF-8"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>myPage</title>
 </head>
 <body layout:fragment="content" class="flex-col flex items-center justify-center">
 <main class="pt-2">
-  <div class="flex justify-end">
-    <div class="flex justify-end gap-1">
-      <a href="/usr/member/modifyPassword" class="btn btn-sm">비밀번호 변경하기</a>
-      <a href="/usr/member/editMyPage" class="btn btn-sm">수정하기</a>
+    <div class="flex justify-end">
+        <div class="flex justify-end gap-1">
+            <a href="/usr/member/modifyPassword" class="btn btn-sm">비밀번호 변경하기</a>
+            <a href="/usr/member/editMyPage" class="btn btn-sm">수정하기</a>
+        </div>
     </div>
-  </div>
-  <table class="table" style="width: 500px">
-    <tr>
-      <th>이름</th>
-      <td th:text="${username}" colspan="2"></td>
-    </tr>
-    <tr>
-      <th>닉네임</th>
-      <td th:text="${nickname}" colspan="2"></td>
-    </tr>
-    <tr>
-      <th>이메일</th>
-      <td th:text="${email}" colspan="2"></td>
-    </tr>
-    <tr>
-      <th>가입일</th>
-      <td th:text="${createdAt}" colspan="2"></td>
-    </tr>
-    <tr>
-      <th>이메일 인증 여부</th>
-      <td th:if="${emailVerified} == true" colspan="2">인증완료</td>
-      <td th:unless="${emailVerified}" colspan="2"><a href="/usr/member/emailVerification" class="btn btn-sm">이메일 인증하러 가기</a></td>
-    </tr>
-  </table>
-  <div class="flex justify-end">
-    <button class="btn bg-error border-error text-white hover:text-error" onclick="confirm('모든 회원 정보가 삭제됩니다. 탈퇴하시겠습니까?')?$(this).next().submit():false;">회원탈퇴</button>
-    <form th:action="|/usr/member/withdrawal|" method="post" hidden></form>
-  </div>
+    <table class="table" style="width: 500px">
+        <tr>
+            <th>이름</th>
+            <td th:text="${username}" colspan="2"></td>
+        </tr>
+        <tr>
+            <th>닉네임</th>
+            <td th:text="${nickname}" colspan="2"></td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td th:text="${email}" colspan="2"></td>
+        </tr>
+        <tr>
+            <th>가입일</th>
+            <td th:text="${createdAt}" colspan="2"></td>
+        </tr>
+        <tr>
+            <th>이메일 인증 여부</th>
+            <td th:if="${emailVerified} == true" colspan="2">인증완료</td>
+            <td th:unless="${emailVerified}" colspan="2"><a href="/usr/member/emailVerification" class="btn btn-sm">이메일
+                인증하러 가기</a></td>
+        </tr>
+    </table>
+    <div class="flex justify-end">
+        <button class="btn bg-error border-error text-white hover:text-error"
+                onclick="confirm('모든 회원 정보가 삭제됩니다. 탈퇴하시겠습니까?')?$(this).next().submit():false;">회원탈퇴
+        </button>
+        <form th:action="|/usr/member/withdrawal|" method="post" hidden></form>
+    </div>
 </main>
 </body>
 </html>

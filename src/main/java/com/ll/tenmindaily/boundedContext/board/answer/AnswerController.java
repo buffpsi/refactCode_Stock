@@ -1,10 +1,7 @@
 package com.ll.tenmindaily.boundedContext.board.answer;
 
 
-
-import com.ll.tenmindaily.boundedContext.board.category.Category;
 import com.ll.tenmindaily.boundedContext.board.question.Question;
-import com.ll.tenmindaily.boundedContext.board.question.QuestionForm;
 import com.ll.tenmindaily.boundedContext.board.question.QuestionService;
 import com.ll.tenmindaily.boundedContext.member.entity.Member;
 import com.ll.tenmindaily.boundedContext.member.service.MemberService;
@@ -57,11 +54,9 @@ public class AnswerController {
     }*/
 
 
-
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create/{id}")
-    public String createAnswer(AnswerForm answerForm, @PathVariable("id") Integer id, Model model){
+    public String createAnswer(AnswerForm answerForm, @PathVariable("id") Integer id, Model model) {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
         return "usr/board/answer_form";
@@ -70,10 +65,10 @@ public class AnswerController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}")
     public String createAnswer(Model model, @PathVariable("id") Integer id,
-                               @Valid AnswerForm answerForm, BindingResult bindingResult, Principal principal){
+                               @Valid AnswerForm answerForm, BindingResult bindingResult, Principal principal) {
         Question question = this.questionService.getQuestion(id);
         Member member = this.memberService.getUser(principal.getName());
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("question", question);
             return "usr/board/question_detail";
         }
@@ -83,10 +78,10 @@ public class AnswerController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String answerModify(AnswerForm answerForm, @PathVariable("id") Integer id, Principal principal){
+    public String answerModify(AnswerForm answerForm, @PathVariable("id") Integer id, Principal principal) {
         //답변 수정시 기존의 내용이 필요
         Answer answer = this.answerService.getAnswer(id);
-        if(!answer.getAuthor().getUserId().equals(principal.getName())){
+        if (!answer.getAuthor().getUserId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }//-------현제 사용자랑 답변 저자랑 비교하는 메소드------유저 객체 구현후 추후 수정 --------------------
         answerForm.setContent(answer.getContent());
@@ -96,12 +91,12 @@ public class AnswerController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String answerModify(@Valid AnswerForm answerForm, BindingResult bindingResult,
-                               @PathVariable("id") Integer id, Principal principal){
-        if(bindingResult.hasErrors()){
+                               @PathVariable("id") Integer id, Principal principal) {
+        if (bindingResult.hasErrors()) {
             return "usr/board/answer_form";
         }
         Answer answer = this.answerService.getAnswer(id);
-        if(!answer.getAuthor().getUserId().equals(principal.getName())){
+        if (!answer.getAuthor().getUserId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }//-------현제 사용자랑 답변 저자랑 비교하는 메소드------ 유저 객체 구현후 추후 수정 --------------------
         this.answerService.modify(answer, answerForm.getContent());
@@ -110,9 +105,9 @@ public class AnswerController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
-    public String answerDelete(Principal principal, @PathVariable("id") Integer id){
+    public String answerDelete(Principal principal, @PathVariable("id") Integer id) {
         Answer answer = this.answerService.getAnswer(id);
-        if(!answer.getAuthor().getUserId().equals(principal.getName())){
+        if (!answer.getAuthor().getUserId().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
         }//-------현제 사용자랑 답변 저자랑 비교하는 메소드------ 유저 객체 구현후 추후 수정 --------------------
         this.answerService.delete(answer);
@@ -121,7 +116,7 @@ public class AnswerController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/vote/{id}")
-    public String answerVote(Principal principal, @PathVariable("id") Integer id){
+    public String answerVote(Principal principal, @PathVariable("id") Integer id) {
         Answer answer = this.answerService.getAnswer(id);
         Member member = this.memberService.getUser(principal.getName());
         this.answerService.vote(answer, member);//------ 유저 객체 구현후 추후 수정 ----------
