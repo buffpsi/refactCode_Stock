@@ -19,58 +19,6 @@
 
     <title>주식 정보</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-    <style>
-        .text-red {
-            color: red;
-        }
-
-        .text-blue {
-            color: blue;
-        }
-    </style>
-
-    <title>주식 정보</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // 차트에 사용할 데이터
-            var data = {
-                labels: ["매수 강력 추천", "매수 추천", "중립", "매도 추천", "매도 강력 추천"],
-                datasets: [{
-                    data: [${stock.strongBuy}, ${stock.buy}, ${stock.hold}, ${stock.sell}, ${stock.strongSell}],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(153, 102, 255, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            };
-
-            // 차트 생성
-            var ctx = document.getElementById('chart').getContext('2d');
-            new Chart(ctx, {
-                type: 'pie',
-                data: data,
-                options: {
-                    responsive: true
-                }
-            });
-        });
-    </script>
-
 
     <script>
         $(document).ready(function () {
@@ -134,31 +82,25 @@
         #numbers.formatDecimal(((stock.currentPrice - stock.previousClose) / stock.previousClose) * 100, 1, 2) + '%↑' :
         #numbers.formatDecimal(((stock.currentPrice - stock.previousClose) / stock.previousClose) * 100, 1, 2) + '%↓') : '0.00'}"
               th:class="${(stock.currentPrice > stock.previousClose) ? 'text-red' : (stock.currentPrice < stock.previousClose ? 'text-blue' : '')}"></span>)
-        <button id="newsButton" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 1.2em;">
+        <button id="newsButton"
+                style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 1.2em;">
             기업 관련 뉴스 보기
         </button>
     </div>
 
     <div class="d-flex flex-column align-items-center mt-4 max-w-3xl mx-auto">
-        <button id="newsButton" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 1.2em;">기업 관련 뉴스 보기</button>
-    </div>
-
-    <div class="d-flex flex-column align-items-center mt-4 max-w-3xl mx-auto">
-
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">기본 정보</h5>
                         <p class="card-text">
-                            👉 전일 종가 :<br>
+                            👉 전일 종가 :
                             <span th:text="${stock.previousClose}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
                         </p>
                         <p class="card-text">
                             👉 당일 종가 :
-
-                            👉 당일 종가 :<br>
                             <span th:text="${stock.currentPrice}"></span>
                             <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
                         </p>
@@ -169,26 +111,16 @@
                         </p>
                         <p class="card-text" th:if="${stock.forwardPE != null}">
                             👉 PER :
-                            👉 시가총액 :<br>
-                            <span th:text="${stock.marketCap}"></span>
-                            <span th:if="${stock.getSymbol.matches('[A-Za-z].*')}" class="ml-1">$</span>
-                            <span th:unless="${stock.getSymbol.matches('[A-Za-z].*')}" class="ml-1">&#8361;</span>
-                        </p>
-
-                        <p class="card-text" th:if="${stock.forwardPE != null}">
-                            👉 PER :<br>
                             <span th:text="${stock.forwardPE}"></span>
                         </p>
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">배당금 정보</h5>
                         <span th:if="${stock.dividendRate != null}">
-                        <p class="card-text">
                         <p class="card-text">다
                             👉 배당금 :
                             <span th:text="${stock.dividendRate}"></span>
@@ -322,109 +254,4 @@
     </p>
 </div>
 <span id="symbol" th:text="${stock.getSymbol}" style="display:none"></span>
-                <p class="card-text">
-                    👉 배당금 :<br>
-                    <span th:text="${stock.dividendRate}"></span>
-                    <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
-                </p>
-                <p class="card-text">
-                    👉 배당 비율 :<br>
-                    <span th:text="${stock.dividendYield * 100}"></span>%
-                </p>
-                <p class="card-text">
-                    👉 배당권 분리일 :<br>
-                    <span th:text="${stock.exDividendDate}"></span>
-                </p>
-            </span>
-                        <span th:unless="${stock.dividendRate != null}">
-                <p class="card-text">
-                    해당 회사는 배당금을 지원하지 않는 회사입니다.
-                </p>
-            </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <h5 class="card-title">차트적 의미</h5>
-                            <p class="card-text">
-                                👉 52주 최저가 :<br>
-                                <span th:text="${#numbers.formatInteger(stock.fiftyTwoWeekLow,3)}"></span>
-                                <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
-                            </p>
-                            <p class="card-text">
-                                👉 52주 최고가 :<br>
-                                <span th:text="${stock.fiftyTwoWeekHigh}"></span>
-                                <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
-                            </p>
-                            <p class="card-text">
-                                👉 52주 평균가 :<br>
-                                <span th:text="${stock.fiftyDayAverage}"></span>
-                                <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
-                            </p>
-                            <p class="card-text">
-                                👉 최근 12개월 매출액 대비 주가 비율:<br>
-                                <span th:text="${stock.priceToSalesTrailing12Months}"></span>
-                            </p>
-                            <p class="card-text">
-                                👉 200일 이동 평균주가 :<br>
-                                <span th:text="${stock.twoHundredDayAverage}"></span>
-                                <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <h5 class="card-title">애널리스트 의견</h5>
-                            <p class="card-text">
-                                👉 애널리스트 목표 최고가 :<br>
-                                <span th:text="${stock.targetHighPrice}"></span>
-                                <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
-                            </p>
-                            <p class="card-text">
-                                👉 애널리스트 목표 최저가 :<br>
-                                <span th:text="${stock.targetLowPrice}"></span>
-                                <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
-                            </p>
-                            <p class="card-text">
-                                👉 애널리스트들의 평균가 :<br>
-                                <span th:text="${stock.targetMedianPrice}"></span>
-                                <span th:text="${(stock.getSymbol.matches('[A-Za-z]+')) ? '$(달러)' : '₩(원)'}"></span>
-                            </p>
-                            <p class="card-text">
-                                👉 퍼센트~~~~:<br>
-                                <span>매수 강력 추천</span>
-                                <span th:text="${stock.strongBuy}"></span>
-                                <span>매수 추천</span>
-                                <span th:text="${stock.buy}"></span>
-                                <span>중립</span>
-                                <span th:text="${stock.hold}"></span>
-                                <span>매도 추천</span>
-                                <span th:text="${stock.sell}"></span>
-                                <span>매도 강력 추천</span>
-                                <span th:text="${stock.strongSell}"></span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <!--        차트 부분-->
-        <canvas id="chart" width="400" height="400"></canvas>
-        <!--        차트 부분-->
-        <br>
-        <p class="card-text font-weight-bold text-danger">
-            ⚠️ 주의: 위의 정보들은 주식 투자 시 가치와 가격을 판단하고 비교하는 데 도움을 줍니다. 그러나 투자 결정은 다양한 요소를 종합적으로 고려해야 하며, 단일 지표만을 근거로 판단하는 것은
-            권장되지
-            않습니다.
-        </p>
-    </div>
-    <span id="symbol" th:text="${stock.getSymbol}" style="display:none"></span>
 </html>

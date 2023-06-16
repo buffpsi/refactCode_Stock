@@ -56,13 +56,10 @@ dependencies {
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
 	implementation 'org.commonmark:commonmark:0.21.0'
 
-<<<<<<< HEAD
 	//채팅
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.springframework.security:spring-security-messaging'
 
-=======
->>>>>>> 7cf99ee (fix:stockInfo 화면 수정)
 }
 
 tasks.named('test') {
