@@ -1,13 +1,91 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{usr/layout/layout.html}">
+<html th:lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" th:href="@{/css/login_style.css}">
+    <title>회원가입</title>
 </head>
 <body>
-<main layout:fragment="content" class="flex-col flex items-center justify-center">
+    <div class="container">
+        <div class="forms">
+            <div class="form signup">
+                <span class="title">회원가입</span>
+                <form th:action="@{/usr/member/join}" method="POST" onsubmit="JoinForm__submit(this); return false;">
+                    <div class="column">
+                        <div class="input-field">
+                            <input id="username" name="username" type="text" placeholder="이름" required>
+                            <i class="uil uil-smile"></i>
+                        </div>
+                        <div class="input-field">
+                            <input id="nickname" name="nickname" type="text" placeholder="닉네임" required>
+                            <i class="uil uil-grin"></i>
+                        </div>
+                    </div>
+                    <div class="input-field">
+                        <input id="id" name="id" type="text" placeholder="아이디" required>
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        <input id="email" name="email" type="email" class="email" placeholder="이메일" required>
+                        <i class="uil uil-envelope"></i>
+                    </div>
+                    <div class="input-field">
+                        <input id="password" name="password" type="password" class="password" placeholder="비밀번호" required>
+                        <i class="uil uil-unlock-alt"></i>
+                    </div>
+                    <div class="input-field">
+                        <input id="password_check" name="password_check" type="password" class="password" placeholder="비밀번호 확인" required>
+                        <i class="uil uil-lock-alt"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                    </div>
+                    <div class="interest_select">
+                        <select id="interest1" name="interest1">
+                            <option value="">관심 재테크 1</option>
+                            <option value="stocks">주식</option>
+                            <option value="cryptocurrency">코인</option>
+                            <option value="realEstate">부동산</option>
+                            <option value="musicInvestment">뮤직테크</option>
+                            <option value="artInvestment">아트테크</option>
+                            <option value="resellInvestment">리셀테크</option>
+                            <option value="hobbyInvestment">취미테크</option>
+                            <option value="appInvestment">앱테크</option>
+                            <option value="snsInvestment">SNS테크</option>
+                        </select>
+                        <select id="interest2" name="interest2">
+                            <option value="">관심 재테크 2</option>
+                            <option value="stocks">주식</option>
+                            <option value="cryptocurrency">코인</option>
+                            <option value="realEstate">부동산</option>
+                            <option value="musicInvestment">뮤직테크</option>
+                            <option value="artInvestment">아트테크</option>
+                            <option value="resellInvestment">리셀테크</option>
+                            <option value="hobbyInvestment">취미테크</option>
+                            <option value="appInvestment">앱테크</option>
+                            <option value="snsInvestment">SNS테크</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-text">
+                        <div class="checkbox-content">
+                            <input type="checkbox" id="personalInfoAgreement" name="personalInfoAgreement">
+                            <label for="personalInfoAgreement">개인정보 수집 및 활용에 동의합니다.</label>
+                        </div>
+                    </div>
+                    <div class="input-field button">
+                        <input type="button" value="Signup">
+                    </div>
+                </form>
+                <div class="login-signup">
+                    <span class="text">이미 계정이 있으신가요?
+                        <a th:href="@{/usr/member/login}" class="text signup-link">로그인</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{js/script.js}"></script>
     <script>
         function JoinForm__submit(form) {
             form.username.value = form.username.value.trim();
@@ -98,67 +176,5 @@
             form.submit();
         }
     </script>
-
-    <h1 class="pt-2">회원가입</h1>
-    <hr>
-    <form th:action="@{/usr/member/join}" method="POST" class="flex flex-col justify-center"
-          onsubmit="JoinForm__submit(this); return false;">
-        <table class="table">
-            <tr class="gap-5">
-                <td class="text-right pr-4">
-                    <label for="username">이름</label>
-                </td>
-                <td>
-                    <input id="username" name="username" type="text" class="border-2 rounded-md px-2">
-                </td>
-            </tr>
-            <tr class="gap-5">
-                <td class="text-right pr-4">
-                    <label for="userId">아이디</label>
-                </td>
-                <td>
-                    <input id="userId" name="userId" type="text" class="border-2 rounded-md px-2">
-                </td>
-            </tr>
-            <tr class="gap-5">
-                <td class="text-right pr-4">
-                    <label for="password">비밀번호</label>
-                </td>
-                <td>
-                    <input id="password" name="password" type="password" class="border-2 rounded-md px-2">
-                </td>
-            </tr>
-            <tr class="gap-5">
-                <td class="text-right pr-4">
-                    <label for="password_check">비밀번호 확인</label>
-                </td>
-                <td>
-                    <input id="password_check" name="password_check" type="password" class="border-2 rounded-md px-2">
-                </td>
-            </tr>
-            <tr class="gap-5">
-                <td class="text-right pr-4">
-                    <label for="nickname">닉네임</label>
-                </td>
-                <td>
-                    <input id="nickname" name="nickname" type="text" class="border-2 rounded-md px-2">
-                </td>
-            </tr>
-            <tr class="gap-5">
-                <td class="text-right pr-4">
-                    <label for="email">이메일</label>
-                </td>
-                <td>
-                    <input id="email" name="email" type="text" class="border-2 rounded-md px-2">
-                </td>
-            </tr>
-        </table>
-        <div>
-            <input type="checkbox" id="personalInfoAgreement" name="personalInfoAgreement">
-            <label for="personalInfoAgreement">개인정보 수집 및 활용 동의</label>
-        </div>
-        <button type="submit" class="btn">회원가입</button>
-    </form>
-</main>
 </body>
 </html>
