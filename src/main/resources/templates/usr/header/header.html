@@ -1,5 +1,8 @@
 <html th:lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link rel="stylesheet" th:href="@{/css/header_style.css}"/>
+<link rel="stylesheet" th:href="@{/css/header_mobile.css}"/>
+
 <body>
 <header th:fragment="header">
     <div class="main_menu">
@@ -7,7 +10,7 @@
             <div class="filter_item">주식
                 <i class="fi fi-rr-angle-small-down"></i>
                 <ul class="select_box">
-                    <li class="active"><a th:href="@{/stocks}">주식이란?</a></li>
+                    <li class="active"><a th:href="@{/stocks}">주식설명</a></li>
                     <li><a th:href="@{/stocks/add}">종목추가</a></li>
                 </ul>
             </div>
@@ -20,9 +23,9 @@
             <div class="filter_item">게시판
                 <i class="fi fi-rr-angle-small-down"></i>
                 <ul class="select_box">
-                    <li><a th:href="@{/question/list}">전체</a></li>
-                    <li><a th:href="@{/question/stock/list}">주식</a></li>
-                    <li><a th:href="@{/question/coin/list}">코인</a></li>
+                    <li><a th:href="@{/question/list}">전체게시판</a></li>
+                    <li><a th:href="@{/question/stock/list}">주식게시판</a></li>
+                    <li><a th:href="@{/question/coin/list}">코인게시판</a></li>
                 </ul>
             </div>
             <div class="filter_item"><a th:href="@{/rooms}">채팅방</a>
@@ -65,8 +68,8 @@
         <div class="mobile_menu_main">
             <div class="mobile_main">
                 <li><a th:href="@{/usr/member/login}" class="text signup-link">로그인/회원가입</a></li>
-                <li><a href="#!">공지사항</a></li>
-                <li><a href="#!">서비스소개</a></li>
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">서비스소개</a></li>
             </div>
         </div>
     </div>

@@ -59,18 +59,32 @@ header{
 .menu_section .filter_item .select_box{
     position: relative;
     display: none;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
     font-weight: 500;
     flex-wrap: wrap;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px #181818;
+    right: 10px;
+    box-shadow: 0 2px 15px 0 rgba(224, 224, 224, 0.5);
 }
 .menu_section .filter_item:hover .select_box{
     display: flex;
 }
 .menu_section .filter_item .select_box li{
     width: 85px;
-    color: #8C8C8C
+    color: #8C8C8C;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
 }
 .menu_section .filter_item .select_box li:hover{
-    color: #181818
+    text-decoration-line: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: #cccccc;
+    color: #181818;
 }
 .menu_section .filter_item .select_box li:active{
     color: #1860a9
