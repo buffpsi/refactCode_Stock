@@ -1,7 +1,7 @@
 <html layout:decorate="~{usr/layout/layout.html}" lang="kr" xmlns:layout="http://www.thymeleaf.org">
 
 <div layout:fragment="content" class="flex items-center justify-center">
-    <div class="max-w-3xl w-full px-4">
+    <div class="max-w-2xl w-full px-4">
         <h5 class="my-3 border-bottom pb-2">답변</h5>
 
         <form th:if="${question != null}" th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}"

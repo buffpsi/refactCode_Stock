@@ -1,78 +1,72 @@
 <html th:lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<link rel="stylesheet" th:href="@{/css/header_style.css}"/>
-<link rel="stylesheet" th:href="@{/css/header_mobile.css}"/>
 
-<body>
-<header th:fragment="header">
-    <div class="main_menu">
-        <div class="menu_section">
-            <div class="filter_item">주식
-                <i class="fi fi-rr-angle-small-down"></i>
-                <ul class="select_box">
-                    <li class="active"><a th:href="@{/stocks}">주식설명</a></li>
-                    <li><a th:href="@{/stocks/add}">종목추가</a></li>
-                </ul>
-            </div>
-            <div class="filter_item">코인
-                <i class="fi fi-rr-angle-small-down"></i>
-                <ul class="select_box">
-                    <li><a th:href="@{/coinNews/S1N1}">코인뉴스</a></li>
-                </ul>
-            </div>
-            <div class="filter_item">게시판
-                <i class="fi fi-rr-angle-small-down"></i>
-                <ul class="select_box">
-                    <li><a th:href="@{/question/list}">전체게시판</a></li>
-                    <li><a th:href="@{/question/stock/list}">주식게시판</a></li>
-                    <li><a th:href="@{/question/coin/list}">코인게시판</a></li>
-                </ul>
-            </div>
-            <div class="filter_item"><a th:href="@{/rooms}">채팅방</a>
-                <i class= "fi fi-sr-users-alt"></i>
-            </div>
+<div th:fragment="header" class ="sticky top-0 z-50">
+    <div class="navbar max-w-2xl mx-auto w-full px-4">
+        <!--드롭다운 버튼 삭제-->
+        <!--로고-->
+        <div class="flex-none">
+            <a href ="/" class="btn btn-ghost normal-case text-xl">10minDaily</a>
         </div>
-        <div class="logo">
-            <a th:href="@{/main}"><img th:src="@{/images/10minDaily1.svg}"/></a>
-        </div>
-        <div class="login_menu">
-            <ul>
-                <li><a th:href="@{/usr/member/login}" class="text signup-link">로그인/회원가입</a></li>
+        <!--메뉴 구성-->
+        <div class="flex-grow-1">
+            <ul class="menu menu-horizontal px-1">
+                <li tabindex="0">
+                    <a>
+                        주식
+                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </a>
+                    <ul class="p-2 bg-base-100">
+                        <li><a th:href="@{/stocks/}">주식설명</a></li>
+                        <li><a th:href="@{/stocks/add}">종목추가</a></li>
+                    </ul>
+                </li>
+                <li tabindex="0">
+                    <a>
+                        코인
+                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </a>
+                    <ul class="p-2 bg-base-100">
+                        <li><li><a th:href="@{/coinNews/S1N1}">코인뉴스</a></li></li>
+                    </ul>
+                </li>
+
+                <li tabindex="0">
+                    <a>
+                        게시판
+                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+                    </a>
+                    <ul class="p-2 bg-base-100">
+                        <li><a th:href="@{/question/list}">전체게시판</a></li>
+                        <li><a th:href="@{/question/stock/list}">주식게시판</a></li>
+                        <li><a th:href="@{/question/coin/list}">코인게시판</a></li>
+                    </ul>
+                </li>
+                <li><a th:href="@{/rooms}">채팅방</a></li>
             </ul>
         </div>
-    </div>
-    <div class="mobile_menu mobile_view">
-        <div class="mobile_menu_section">
-            <div class="mobile_menu_item">재테크
-                <i class="fi fi-rr-angle-small-down"></i>
-                <ul class="mobile_select_box">
-                    <li><a th:href="@{/stocks}">주식</a></li>
-                    <li><a th:href="@{/coinNews/S1N1}">코인</a></li>
+        <!--검색창, 마이페이지-->
+        <div class="flex-none gap-2">
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <i class="fa-solid fa-user content-center "></i>
+                    </div>
+                </label>
+
+                <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+                    <li th:if="${@rq.isLogin()}">
+                        <a class="justify-between" href="/usr/member/myPage">
+                            마이페이지
+                            <span class="badge">New</span>
+                        </a>
+                    </li>
+                    <li th:if="${@rq.isLogout()}"><a href="/usr/member/login">로그인</a></li>
+                    <li th:if="${@rq.isLogin()}"><a href="javascript:" onclick="$(this).next().submit();">로그아웃</a>
+                        <form class="!hidden" hidden th:action="|/usr/member/logout|" method="POST"></form></li>
                 </ul>
-            </div>
-            <div class="mobile_menu_item">커뮤니티
-                <i class="fi fi-rr-angle-small-down"></i>
-                <ul class="mobile_select_box">
-                    <li><a th:href="@{/question/list}">전체게시판</a></li>
-                    <li><a th:href="@{/question/stock/list}">주식게시판</a></li>
-                    <li><a th:href="@{/question/coin/list}">코인게시판</a></li>
-                    <li><a th:href="@{/rooms}">채팅방</a></li>
-                </ul>
-            </div>
-            <div class="mobile_menu_item">
-                <div class="mobile_sidebar">
-                    <i class="fi fi-sr-menu-burger"></i>
-                </div>
-            </div>
-        </div>
-        <div class="mobile_menu_main">
-            <div class="mobile_main">
-                <li><a th:href="@{/usr/member/login}" class="text signup-link">로그인/회원가입</a></li>
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">서비스소개</a></li>
             </div>
         </div>
     </div>
-</header>
-</body>
+</div>
 </html>

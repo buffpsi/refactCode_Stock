@@ -1,7 +1,7 @@
 <html layout:decorate="~{usr/layout/layout.html}" lang="kr" xmlns:layout="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org">
 <div layout:fragment="content" class="flex items-center justify-center">
-    <div class="max-w-3xl w-full px-4">
+    <div class="max-w-2xl w-full px-4">
         <div class="badge badge-primary" th:text="${question.category.getInvestment()}"></div>
         <!-- 질문 -->
         <h2 class="border-b py-2" th:text="${question.subject}"></h2>

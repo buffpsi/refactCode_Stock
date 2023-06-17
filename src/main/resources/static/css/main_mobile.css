@@ -17,7 +17,7 @@
     .mobile_hidden{
         display: none !important;
     }
-    header{
+    main{
         width: 100%;
         padding-top: 5px;
         border-bottom: none;
