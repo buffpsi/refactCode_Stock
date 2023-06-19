@@ -25,6 +25,7 @@ public class AmericaStockCrawlingService {
             Elements tds = row.select("td");
             Element td = tds.get(1);
             Element a = td.selectFirst("a");
+
             String ticker = a.attr("href").replace("/symbol/", "");
             String name = a.text();
 

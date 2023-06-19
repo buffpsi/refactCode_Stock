@@ -24,10 +24,11 @@
         $(document).ready(function () {
             $('#newsButton').click(function () {
                 var symbol = $('#symbol').text();
-                window.location.href = '/stocks/news/' + symbol;
+                window.location.href = 'http://localhost:8080/stocks/news/' + symbol;
             });
         });
     </script>
+
 
     <!--    차트를 그리는 거 -->
     <script>
